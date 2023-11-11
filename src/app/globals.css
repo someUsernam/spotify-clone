@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --min-col-width: 270px;
+    --col-gap: 12px;
+    --row-gap: 12px;
+    --grid-gap: 16px;
+    --min-container-width: 372px;
+  }
+}
+
+@supports (height: 100dvh) {
+  :root,html, body {
+    height: 100dvh;
+  }
+}
+
+@layer utilities {
+  .grid-layout-sm {
+    display: grid;
+    grid-gap: var(--col-gap) var(--row-gap);
+		grid-template: auto/repeat(auto-fill,minmax(max(var(--min-col-width),25%),1fr));
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-gap: 0 var(--grid-gap) ;
+    grid-template-columns: repeat(auto-fill,minmax(226px,1fr));
+  }
+
+  .grid-layout-lg {
+    display: grid;
+    grid-gap: 0 var(--grid-gap) ;
+    grid-template-columns: repeat(auto-fill,minmax(183px,1fr));
+  }
+}
+
+@layer utilities {
+  .carousel {
+    overflow: hidden;
+    scroll-behavior: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/*
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+
+
+::-webkit-scrollbar-thumb {
+  background-color: hsla(0,0%,100%,.3);
+  border-radius: 2px;
+  max-height: none;
+  min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(0,0%,100%,.5);
+} */
+
+.transparent-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+
+}
+
+.transparent-scrollbar {
+  /* background-image is set to solid linear gradient to make sure that the background of the container stays the same regardless of the change in the background-color property. This makes transition for the background-color possible without affecting the container's background.*/
+  background-image: linear-gradient(#121212,#121212);
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.transparent-scrollbar:hover {
+  background-color: hsla(0,0%,100%,.3);
+
+}
+
+.transparent-scrollbar:active {
+  background-color: hsla(0,0%,100%,.7);
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb {
+  background-color: inherit;
+  border-radius: 2px;
+  border: 4px solid transparent;
+}
+
+/*.transparent-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, #c0081c 64px, transparent 64px, transparent 100%);
+}*/
+
+/* @supports (content-visibility: auto) {
+  body {
+    content-visibility: auto;
+  }
+} */
