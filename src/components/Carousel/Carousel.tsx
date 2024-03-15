@@ -12,19 +12,19 @@ function Carousel({
 	const [showChips, setShowChips] = useState(false);
 
 	useEffect(() => {
-		observer.current = new ResizeObserver((entries) => {
+		const handleResize = (entries: ResizeObserverEntry[]) => {
 			const entry = entries[0];
 			const target = entry.target as HTMLElement;
 			const parent = target.parentElement as HTMLElement;
 
 			if (parent.clientWidth < target.clientWidth) {
 				setShowChips(true);
-				console.log("show");
 			} else {
 				setShowChips(false);
 			}
-		});
+		};
 
+		observer.current = new ResizeObserver(handleResize);
 		observer.current.observe(targetRef.current as HTMLElement);
 
 		return () => {
@@ -37,7 +37,7 @@ function Carousel({
 			{showChips && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full absolute left-0"
+					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary size-8 border-full rounded-full absolute left-0"
 					aria-label="Go Back"
 				>
 					<GoChevronLeft size={25} />
@@ -47,7 +47,7 @@ function Carousel({
 			{showChips && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full absolute right-0"
+					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary size-8 border-full rounded-full absolute right-0"
 					aria-label="Go Forward"
 				>
 					<GoChevronRight size={25} />
