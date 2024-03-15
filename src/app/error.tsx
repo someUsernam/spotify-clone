@@ -1,5 +1,8 @@
 "use client";
 
+import Button from "@/components/Button/Button";
+import { useEffect } from "react";
+
 type ErrorPageProps = {
 	error: {
 		message: string;
@@ -7,14 +10,23 @@ type ErrorPageProps = {
 	};
 };
 
-function ErrorPage({ error }: ErrorPageProps) {
+export default function ErrorPage({
+	error,
+	reset,
+}: {
+	error: Error & { digest?: string };
+	reset: () => void;
+}) {
+	useEffect(() => {
+		console.error("catched by app error boundary -", error);
+	}, [error]);
+
 	return (
 		<div>
-			<h1>Error</h1>
-			<p>
-				{error.message} - {error.status}
-			</p>
+			<h2>Something went wrong!</h2>
+			<Button variant="light-md" onClick={() => reset()}>
+				Try again
+			</Button>
 		</div>
 	);
 }
-export default ErrorPage;
