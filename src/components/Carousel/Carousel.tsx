@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, useCallback, useEffect, useRef } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 function Carousel({
@@ -9,40 +9,7 @@ function Carousel({
 }: { children: React.ReactNode; target: React.RefObject<HTMLElement> }) {
 	const observer = useRef<ResizeObserver>();
 	const targetRef = useRef<ElementRef<"div"> | null>(null);
-
-	const checkOverflow = useCallback((entries: ResizeObserverEntry[]) => {
-		const entry = entries[0];
-		const target = entry.target as HTMLElement;
-		const parent = target.parentElement as HTMLElement;
-
-		console.log(parent.clientWidth);
-		console.log(target.clientWidth);
-
-		if (parent.clientWidth < target.clientWidth) {
-		}
-	}, []);
-
-	// const setRef = useCallback(
-	// 	(node: HTMLElement | null) => {
-	// 		if (!node) {
-	// 			return;
-	// 		}
-
-	// 		// observer.current = new IntersectionObserver((entries) => {
-	// 		// 	if (entries[0].isIntersecting) {
-	// 		// 		const entry = entries[0].target;
-
-	// 		// 		if ((entry.parentNode as HTMLElement).clientWidth < entry.clientWidth) {
-	// 		// 			console.log("is visible");
-	// 		// 		}
-	// 		// 	}
-	// 		// });
-
-	// 		observer.current = new ResizeObserver(checkOverflow);
-	// 		observer.current.observe(node);
-	// 	},
-	// 	[checkOverflow],
-	// );
+	const [showChips, setShowChips] = useState(false);
 
 	useEffect(() => {
 		observer.current = new ResizeObserver((entries) => {
@@ -50,44 +17,42 @@ function Carousel({
 			const target = entry.target as HTMLElement;
 			const parent = target.parentElement as HTMLElement;
 
-			console.log(parent.clientWidth);
-			console.log(target.clientWidth);
-
 			if (parent.clientWidth < target.clientWidth) {
+				setShowChips(true);
+				console.log("show");
+			} else {
+				setShowChips(false);
 			}
 		});
 
-		if (targetRef.current) {
-			observer.current.observe(targetRef.current);
-		}
+		observer.current.observe(targetRef.current as HTMLElement);
 
 		return () => {
-			if (targetRef.current) {
-				observer.current?.unobserve(targetRef.current);
-			}
 			observer.current?.disconnect();
 		};
 	}, []);
 
 	return (
-		<div ref={targetRef} className="flex items-center">
-			<button
-				type="button"
-				className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full"
-				aria-label="Go Back"
-			>
-				<GoChevronLeft size={25} />
-			</button>
-
+		<div className="flex items-center" ref={targetRef}>
+			{showChips && (
+				<button
+					type="button"
+					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full absolute left-0"
+					aria-label="Go Back"
+				>
+					<GoChevronLeft size={25} />
+				</button>
+			)}
 			{children}
-
-			<button
-				type="button"
-				className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full"
-				aria-label="Go Forward"
-			>
-				<GoChevronRight size={25} />
-			</button>
+			{showChips && (
+				<button
+					type="button"
+					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full absolute right-0"
+					aria-label="Go Forward"
+				>
+					<GoChevronRight size={25} />
+				</button>
+			)}
 		</div>
 	);
 }
