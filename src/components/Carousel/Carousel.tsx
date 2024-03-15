@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { ElementRef, useCallback, useEffect, useRef } from "react";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 function Carousel({
@@ -8,7 +8,7 @@ function Carousel({
 	target,
 }: { children: React.ReactNode; target: React.RefObject<HTMLElement> }) {
 	const observer = useRef<ResizeObserver>();
-	const targetRef = useRef<HTMLDivElement | null>(null);
+	const targetRef = useRef<ElementRef<"div"> | null>(null);
 
 	const checkOverflow = useCallback((entries: ResizeObserverEntry[]) => {
 		const entry = entries[0];
