@@ -1,6 +1,5 @@
-import { DEV_URL, SPOTIFY_API_ORIGIN, basic } from "@/utils/constants";
+import { SPOTIFY_API_ORIGIN, basic } from "@/utils/constants";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
 import querystring from "querystring";
 
 interface FetcherGetParams {
@@ -14,7 +13,15 @@ interface FetcherPostParams {
 	readonly options: Record<string, string | undefined | null>;
 }
 
-const fetcher = (function () {
+function setSearchParams(url: URL, params: Record<string, string>) {
+	for (const [key, value] of Object.entries(params)) {
+		if (value !== undefined) {
+			url.searchParams.set(key, value);
+		}
+	}
+}
+
+const fetcher = (() => {
 	async function get<T>({
 		endpoint,
 		params = {},
@@ -23,67 +30,43 @@ const fetcher = (function () {
 		const cookieStore = cookies();
 		const token = cookieStore.get("access_token")?.value;
 
-		const url = new URL(`${SPOTIFY_API_ORIGIN}/${endpoint}`);
+		const url = new URL(`${SPOTIFY_API_ORIGIN}${endpoint}`);
 
-		for (const [key, value] of Object.entries(params)) {
-			if (value !== undefined) {
-				url.searchParams.set(key, value);
-			}
+		setSearchParams(url, params);
+
+		const response = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+			...options,
+		});
+
+		if (!response.ok) {
+			return response as unknown as T;
 		}
 
-		try {
-			const response = await fetch(url, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-				...options,
-			});
+		const data: T = await response.json();
 
-			if (!response.ok) {
-				NextResponse.redirect(`${DEV_URL}/api/login?$`);
-			}
-
-			const data: T = await response.json();
-
-			return data;
-		} catch (error) {
-			// NextResponse.json({ error: (error as Error).message });
-			NextResponse.redirect(`${DEV_URL}/api/refresh`);
-			throw new Error((error as Error).message);
-		}
+		return data;
 	}
 
 	async function post<T>({ endpoint, options }: FetcherPostParams): Promise<T> {
-		const cookieStore = cookies();
-		const token = cookieStore.get("access_token")?.value;
-		const expiresIn = Number(cookieStore.get("expires_in")?.value);
-		const creationTime = Number(cookieStore.get("creation_time")?.value);
+		const response = await fetch(endpoint, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				Authorization: `Basic ${basic}`,
+			},
+			body: querystring.stringify(options),
+		});
 
-		try {
-			if (Date.now() < creationTime + expiresIn * 1000) {
-				return token as T;
-			}
-
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-					Authorization: `Basic ${basic}`,
-				},
-				body: querystring.stringify(options),
-			});
-
-			if (!response.ok) {
-				NextResponse.json({ error: response.statusText });
-			}
-
-			const data: T = await response.json();
-
-			return data;
-		} catch (error) {
-			NextResponse.json({ error: (error as Error).message });
-			throw new Error((error as Error).message);
+		if (!response.ok) {
+			return response as unknown as T;
 		}
+
+		const data: T = await response.json();
+
+		return data;
 	}
 
 	return {

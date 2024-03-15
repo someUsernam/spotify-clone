@@ -40,7 +40,6 @@ const nextConfig = {
 			{
 				protocol: "https",
 				hostname: "thisis-images.spotifycdn.com",
-				pathname: "/**/*",
 			},
 			{
 				protocol: "https",
