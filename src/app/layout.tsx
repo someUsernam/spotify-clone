@@ -5,6 +5,7 @@ import TopBar from "@/composables/TopBar/TopBar";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Suspense } from "react";
+import Loading from "./(root)/loading";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -27,9 +28,8 @@ export default function RootLayout({ children }: ChildrenProps) {
 				<Sidebar />
 				<MainLayout>
 					<TopBar />
-
 					<Main>
-						<Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+						<Suspense fallback={<Loading />}>{children}</Suspense>
 					</Main>
 				</MainLayout>
 			</body>
