@@ -10,7 +10,6 @@ function Carousel({
 	const observer = useRef<ResizeObserver>();
 	const targetRef = useRef<ElementRef<"div"> | null>(null);
 	const [showChips, setShowChips] = useState(false);
-	const [showChips, setShowChips] = useState(false);
 
 	useEffect(() => {
 		const handleResize = (entries: ResizeObserverEntry[]) => {
