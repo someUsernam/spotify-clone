@@ -39,7 +39,7 @@ function useResizeSidebar() {
 			window.removeEventListener("mousemove", handleResize);
 			window.removeEventListener("mouseup", stopResize);
 		};
-	}, [handleResize, stopResize]);
+	}, [sidebarWidth]);
 
 	return { sidebarRef, sidebarWidth, startResize };
 }
