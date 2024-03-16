@@ -74,6 +74,7 @@ function Title({
 						<Link
 							className=" hover:underline hover:underline-offset-1 text-sm cursor-pointer dark:group-hover:text-primary"
 							href={`/artist/${artist.id}`}
+							key={artist.id}
 						>
 							{arr.length > 1
 								? i !== arr.length - 1

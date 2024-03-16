@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { useRef } from "react";
-import Carousel from "../Carousel/Carousel";
 
 export const FiltersTags = [
 	{ href: "", label: "All" },
@@ -27,22 +26,20 @@ function FiltersList() {
 
 	return (
 		<>
-			<Carousel target={observerTarget}>
-				{FiltersTags.map((tag) => (
-					<Link
-						className={`py-1 px-3 cursor-pointer transition-colors rounded-full text-sm ${
-							`/search/${query}${tag.href}` === pathname
-								? activeFilter
-								: inactiveFilter
-						} `}
-						href={`/search/${query}/${tag.href}`}
-						key={tag.label}
-						ref={observerTarget}
-					>
-						{tag.label}
-					</Link>
-				))}
-			</Carousel>
+			{FiltersTags.map((tag) => (
+				<Link
+					className={`py-1 px-3 cursor-pointer transition-colors rounded-full text-sm ${
+						`/search/${query}${tag.href}` === pathname
+							? activeFilter
+							: inactiveFilter
+					} `}
+					href={`/search/${query}/${tag.href}`}
+					key={tag.label}
+					ref={observerTarget}
+				>
+					{tag.label}
+				</Link>
+			))}
 		</>
 	);
 }

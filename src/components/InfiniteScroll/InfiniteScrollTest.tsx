@@ -130,7 +130,7 @@ function InfiniteScroll<T>({
 							{index}
 						</div>
 					) : null}
-					<CardAlbum album={album} />
+					<CardAlbum album={album} key={album.id} />
 				</>
 			))}
 			<div ref={observerListRef} />
