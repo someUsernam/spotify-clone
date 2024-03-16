@@ -23,7 +23,7 @@ export default function RootLayout({ children }: ChildrenProps) {
 	return (
 		<html lang="en">
 			<body
-				className={`${plusJakartaSans.className} flex dark:bg-main dark:text-primary gap-2 p-2 leading-relaxed overflow-hidden antialiased font-medium`}
+				className={`${plusJakartaSans.className} grid grid-cols-[auto_1fr] dark:bg-main dark:text-primary gap-2 p-2 leading-relaxed overflow-hidden antialiased font-medium`}
 			>
 				<Sidebar />
 				<MainLayout>
