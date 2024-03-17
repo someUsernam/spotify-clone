@@ -1,5 +1,5 @@
-import { getRefreshToken } from "@/services/spotify";
-import { DEV_URL } from "@/utils/constants";
+import { getRefreshToken } from "@/shared/services/spotify";
+import { DEV_URL } from "@utils/constants";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 

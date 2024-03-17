@@ -1,9 +1,9 @@
-import PlaylistHeader from "@/components/Playlist/PlaylistHeader";
-import PlaylistItem from "@/components/Playlist/PlaylistItem";
-import PlaylistLayout from "@/components/Playlist/PlaylistLayout";
-import PlaylistPlayer from "@/components/Playlist/PlaylistPlayer";
-import { getPlaylist } from "@/services/spotify";
-import { onError } from "@/utils/onError";
+import { getPlaylist } from "@shared/services/spotify";
+import { onError } from "@shared/utils/onError";
+import PlaylistHeader from "@ui/Playlist/PlaylistHeader";
+import PlaylistItem from "@ui/Playlist/PlaylistItem";
+import PlaylistLayout from "@ui/Playlist/PlaylistLayout";
+import PlaylistPlayer from "@ui/Playlist/PlaylistPlayer";
 
 type PlaylistParams = {
 	params: {

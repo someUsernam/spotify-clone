@@ -1,7 +1,7 @@
-import { getSearchAction } from "@/actions";
-import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
-import Section from "@/components/Main/Section";
-import { onError } from "@/utils/onError";
+import InfiniteScroll from "@/shared/components/blocks/InfiniteScroll/InfiniteScroll";
+import { Section } from "@blocks/Section";
+import { onError } from "@shared/utils/onError";
+import { getSearchAction } from "@utils/actions";
 import { Metadata } from "next";
 
 const type = "episode";

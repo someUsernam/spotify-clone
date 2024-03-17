@@ -1,10 +1,14 @@
-import Main from "@/composables/Main/Main";
-import MainLayout from "@/composables/Main/MainLayout";
-import Sidebar from "@/composables/Sidebar/Sidebar";
-import TopBar from "@/composables/TopBar/TopBar";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Suspense } from "react";
+import Loading from "./(root)/loading";
+
+import { Main } from "./_components/Main";
+import { MainLayout } from "./_components/Main/MainLayout";
+import { Player } from "./_components/Player";
+import { Sidebar } from "./_components/Sidebar";
+import { TopBar } from "./_components/TopBar";
+
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -22,16 +26,16 @@ export default function RootLayout({ children }: ChildrenProps) {
 	return (
 		<html lang="en">
 			<body
-				className={`${plusJakartaSans.className} flex dark:bg-main dark:text-primary gap-2 p-2 leading-relaxed overflow-hidden antialiased font-medium`}
+				className={`${plusJakartaSans.className} grid grid-cols-[auto_1fr] dark:bg-main dark:text-primary gap-2 p-2 leading-relaxed overflow-hidden antialiased font-medium`}
 			>
 				<Sidebar />
 				<MainLayout>
 					<TopBar />
-
 					<Main>
-						<Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+						<Suspense fallback={<Loading />}>{children}</Suspense>
 					</Main>
 				</MainLayout>
+				<Player />
 			</body>
 		</html>
 	);

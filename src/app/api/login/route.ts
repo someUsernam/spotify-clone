@@ -1,10 +1,10 @@
+import { generateRandomString } from "@/shared/utils/generateRandomString";
 import {
 	AUTH_ENDPOINT,
 	CLIENT_ID,
 	REDIRECT_URI,
 	SCOPES,
-} from "@/utils/constants";
-import { generateRandomString } from "@/utils/generateRandomString";
+} from "@utils/constants";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import querystring from "querystring";
