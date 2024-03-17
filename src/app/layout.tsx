@@ -7,6 +7,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Suspense } from "react";
 import Loading from "./(root)/loading";
 import "./globals.css";
+import { Player } from "./_components/Player";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
 	subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: ChildrenProps) {
 						<Suspense fallback={<Loading />}>{children}</Suspense>
 					</Main>
 				</MainLayout>
+				<Player />
 			</body>
 		</html>
 	);
