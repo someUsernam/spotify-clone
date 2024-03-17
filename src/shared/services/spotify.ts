@@ -148,6 +148,10 @@ async function getRecentlyPlayedTracks() {
 }
 
 export {
+	getAvailableDevices,
+	getCurrentlyPlayingTrack,
+	getPlaybackState,
+	getRecentlyPlayedTracks,
 	getAccessToken,
 	getArtist,
 	getCategoryPlaylist,
