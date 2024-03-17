@@ -1,6 +1,9 @@
-import Card from "@/components/Card/Card";
-import Section from "@/components/Main/Section";
-import { getCategoryPlaylist, getSingleCategory } from "@/services/spotify";
+import {
+	getCategoryPlaylist,
+	getSingleCategory,
+} from "@/shared/services/spotify";
+import { Section } from "@blocks/Section";
+import { Card } from "@ui/Card";
 
 type CategoryProps = {
 	params: {

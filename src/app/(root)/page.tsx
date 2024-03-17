@@ -1,12 +1,12 @@
-import Card from "@/components/Card/Card";
-import Section from "@/components/Main/Section";
 import {
 	getTopArtists,
 	getTopTracks,
 	getUserSavedTracks,
-} from "@/services/spotify";
-import { getGreeting } from "@/utils/getGreeting";
-import { onError } from "@/utils/onError";
+} from "@/shared/services/spotify";
+import { getGreeting } from "@/shared/utils/getGreeting";
+import { onError } from "@/shared/utils/onError";
+import { Section } from "@blocks/Section";
+import { Card } from "@ui/Card";
 import { Metadata } from "next";
 
 function metadata(): Metadata {

@@ -1,5 +1,5 @@
-import Section from "@/components/Main/Section";
-import { getSeveralCategories } from "@/services/spotify";
+import { getSeveralCategories } from "@/shared/services/spotify";
+import { Section } from "@blocks/Section";
 import Image from "next/image";
 import Link from "next/link";
 
