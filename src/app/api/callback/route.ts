@@ -1,5 +1,5 @@
-import { getAccessToken } from "@/services/spotify";
-import { DEV_URL } from "@/utils/constants";
+import { getAccessToken } from "@/shared/services/spotify";
+import { DEV_URL } from "@utils/constants";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import querystring from "querystring";

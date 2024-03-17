@@ -1,13 +1,13 @@
-import Card from "@/components/Card/Card";
-import CardAlbum from "@/components/Card/CardAlbum";
-import CardArtist from "@/components/Card/CardArtist";
-import CardEpisode from "@/components/Card/CardEpisode";
-import CardPlaylist from "@/components/Card/CardPlaylist";
-import CardShow from "@/components/Card/CardShow";
-import Section from "@/components/Main/Section";
-import PlaylistItem from "@/components/Playlist/PlaylistItem";
-import { getSearch } from "@/services/spotify";
-import { onError } from "@/utils/onError";
+import { Section } from "@blocks/Section";
+import { getSearch } from "@shared/services/spotify";
+import { Card } from "@ui/Card";
+import { CardAlbum } from "@ui/Card/CardAlbum";
+import { CardArtist } from "@ui/Card/CardArtist";
+import { CardEpisode } from "@ui/Card/CardEpisode";
+import { CardPlaylist } from "@ui/Card/CardPlaylist";
+import { CardShow } from "@ui/Card/CardShow";
+import PlaylistItem from "@ui/Playlist/PlaylistItem";
+import { onError } from "@utils/onError";
 import { Metadata } from "next";
 
 export async function generateMetadata({

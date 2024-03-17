@@ -1,7 +1,7 @@
-import Header from "@/components/Main/Header";
-import Section from "@/components/Main/Section";
-import PlaylistPlayer from "@/components/Playlist/PlaylistPlayer";
-import { getArtist } from "@/services/spotify";
+import PlaylistPlayer from "@/shared/components/ui/Playlist/PlaylistPlayer";
+import { Header } from "@blocks/Header";
+import { Section } from "@blocks/Section";
+import { getArtist } from "@shared/services/spotify";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 type ArtistProps = {
