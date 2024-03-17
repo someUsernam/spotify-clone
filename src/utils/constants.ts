@@ -16,6 +16,7 @@ const SCOPES = [
 	"playlist-modify-private",
 	"playlist-modify-public",
 	"user-top-read",
+	"user-read-playback-state",
 ].join(" ");
 
 export {
