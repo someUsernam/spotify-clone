@@ -1,7 +1,7 @@
-import { getSearchAction } from "@/actions";
-import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
-import PlaylistLayout from "@/components/Playlist/PlaylistLayout";
-import { onError } from "@/utils/onError";
+import InfiniteScroll from "@/shared/components/blocks/InfiniteScroll/InfiniteScroll";
+import PlaylistLayout from "@ui/Playlist/PlaylistLayout";
+import { getSearchAction } from "@utils/actions";
+import { onError } from "@utils/onError";
 import { Metadata } from "next";
 
 const type = "track";

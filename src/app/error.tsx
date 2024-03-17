@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button/Button";
+import { Button } from "@ui/Button";
 import { useEffect } from "react";
 
 type ErrorPageProps = {

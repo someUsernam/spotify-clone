@@ -1,11 +1,14 @@
-import Main from "@/composables/Main/Main";
-import MainLayout from "@/composables/Main/MainLayout";
-import Sidebar from "@/composables/Sidebar/Sidebar";
-import TopBar from "@/composables/TopBar/TopBar";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Suspense } from "react";
 import Loading from "./(root)/loading";
+
+import { Main } from "./_components/Main";
+import { MainLayout } from "./_components/Main/MainLayout";
+import { Player } from "./_components/Player";
+import { Sidebar } from "./_components/Sidebar";
+import { TopBar } from "./_components/TopBar";
+
 import "./globals.css";
 import { Player } from "./_components/Player";
 

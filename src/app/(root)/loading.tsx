@@ -1,5 +1,5 @@
-import Skeleton from "@/components/Skeleton/Skeleton";
-import SkeletonCard from "@/components/Skeleton/SkeletonCard";
+import { Skeleton } from "@ui/Skeleton";
+import { SkeletonCard } from "@ui/Skeleton/SkeletonCard";
 
 function Loading() {
 	return (
