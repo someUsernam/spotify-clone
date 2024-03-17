@@ -2,16 +2,20 @@ import { SPOTIFY_API_ORIGIN, basic } from "@utils/constants";
 import { cookies } from "next/headers";
 import querystring from "querystring";
 
-interface FetcherGetParams {
+type FetcherGetParams = {
 	readonly endpoint: string;
 	readonly params?: Record<string, string>;
 	readonly options?: Record<string, string | undefined | null>;
-}
+};
 
-interface FetcherPostParams {
+type FetcherPostParams = {
 	readonly endpoint: string;
-	readonly options: Record<string, string | undefined | null>;
-}
+	readonly options?: Record<
+		string,
+		string | string[] | number | boolean | undefined | null
+	>;
+	readonly headers?: Record<string, string>;
+};
 
 function setSearchParams(url: URL, params: Record<string, string>) {
 	for (const [key, value] of Object.entries(params)) {
@@ -50,12 +54,16 @@ const fetcher = (() => {
 		return data;
 	}
 
-	async function post<T>({ endpoint, options }: FetcherPostParams): Promise<T> {
+	async function post<T>({
+		endpoint,
+		options,
+		headers,
+	}: FetcherPostParams): Promise<T> {
 		const response = await fetch(endpoint, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
 				Authorization: `Basic ${basic}`,
+				...headers,
 			},
 			body: querystring.stringify(options),
 		});

@@ -15,6 +15,7 @@ async function getAccessToken(code: string | null) {
 			grant_type: "authorization_code",
 			redirect_uri: REDIRECT_URI,
 			code: code,
+			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	});
 }
@@ -25,6 +26,7 @@ async function getRefreshToken(refreshToken: string | undefined) {
 		options: {
 			grant_type: "refresh_token",
 			refresh_token: refreshToken,
+			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	});
 }
@@ -147,15 +149,138 @@ async function getRecentlyPlayedTracks() {
 	});
 }
 
+async function transferPlayback(divaceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player",
+		options: {
+			device_ids: [divaceId],
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function startOrResumePlayback(deviceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/play",
+		options: {
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function pausePlayback(deviceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/pause",
+		options: {
+			device_id: deviceId,
+		},
+	});
+}
+
+async function skipToNext(deviceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/next",
+		options: {
+			device_id: deviceId,
+		},
+	});
+}
+
+async function skipToPrevious(deviceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/previous",
+		options: {
+			device_id: deviceId,
+		},
+	});
+}
+
+async function seekToPosition(deviceId: string, position: number) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/seek",
+		options: {
+			position_ms: position,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function setRepeatMode(deviceId: string, state: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/repeat",
+		options: {
+			state,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function setVolume(deviceId: string, volume: number) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/volume",
+		options: {
+			volume_percent: volume,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function toggleShuffle(deviceId: string, state: boolean) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/shuffle",
+		options: {
+			state,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function getUserQueue() {
+	return await fetcher.get({
+		endpoint: "/v1/me/player/queue",
+	});
+}
+
+async function addToQueue(uri: string, deviceId: string) {
+	return await fetcher.post({
+		endpoint: "/v1/me/player/queue",
+		options: {
+			uri,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
 export {
-	getAvailableDevices,
-	getCurrentlyPlayingTrack,
-	getPlaybackState,
-	getRecentlyPlayedTracks,
+	addToQueue,
 	getAccessToken,
 	getArtist,
+	getAvailableDevices,
 	getCategoryPlaylist,
+	getCurrentlyPlayingTrack,
+	getPlaybackState,
 	getPlaylist,
+	getRecentlyPlayedTracks,
 	getRefreshToken,
 	getSearch,
 	getSeveralCategories,
@@ -164,5 +289,15 @@ export {
 	getTopTracks,
 	getUserPlaylists,
 	getUserProfile,
+	getUserQueue,
 	getUserSavedTracks,
+	pausePlayback,
+	seekToPosition,
+	setRepeatMode,
+	setVolume,
+	skipToNext,
+	skipToPrevious,
+	startOrResumePlayback,
+	toggleShuffle,
+	transferPlayback,
 };
