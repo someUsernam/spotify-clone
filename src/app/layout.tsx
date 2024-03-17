@@ -10,7 +10,6 @@ import { Sidebar } from "./_components/Sidebar";
 import { TopBar } from "./_components/TopBar";
 
 import "./globals.css";
-import { Player } from "./_components/Player";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
 	subsets: ["latin"],
