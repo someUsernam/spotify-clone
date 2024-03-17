@@ -17,6 +17,9 @@ const SCOPES = [
 	"playlist-modify-public",
 	"user-top-read",
 	"user-read-playback-state",
+	"user-read-currently-playing",
+	"user-modify-playback-state",
+	"user-read-recently-played",
 ].join(" ");
 
 export {

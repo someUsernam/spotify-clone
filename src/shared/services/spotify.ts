@@ -120,6 +120,33 @@ async function getArtist(artistId: string) {
 	});
 }
 
+async function getPlaybackState() {
+	return await fetcher.get({
+		endpoint: "/v1/me/player",
+	});
+}
+
+async function getAvailableDevices() {
+	return await fetcher.get({
+		endpoint: "/v1/me/player/devices",
+	});
+}
+
+async function getCurrentlyPlayingTrack() {
+	return await fetcher.get({
+		endpoint: "/v1/me/player/currently-playing",
+	});
+}
+
+async function getRecentlyPlayedTracks() {
+	return await fetcher.get({
+		endpoint: "/v1/me/player/recently-played",
+		params: {
+			limit: MAX_ITEMS_IN_ROW,
+		},
+	});
+}
+
 export {
 	getAccessToken,
 	getArtist,
