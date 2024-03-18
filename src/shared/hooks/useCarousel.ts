@@ -1,28 +1,51 @@
 "use client";
 
-import { ElementRef, useEffect, useRef, useState } from "react";
+import { ElementRef, useCallback, useEffect, useRef, useState } from "react";
 
 const GAP_BEETWEEN_BUTTONS = 36;
-const TOTLAL_GAP_BETWEEN_BUTTONS = GAP_BEETWEEN_BUTTONS * 2;
+const TOTAL_GAP_BETWEEN_BUTTONS = GAP_BEETWEEN_BUTTONS * 2;
+
+function calculateTransformations(
+	containerWidth: number,
+	currentWidth: number,
+) {
+	return Math.ceil(containerWidth / currentWidth);
+}
+
+function calculateStep(containerWidth: number, currentWidth: number) {
+	return (
+		(containerWidth - currentWidth) /
+		calculateTransformations(containerWidth, currentWidth)
+	);
+}
+
+function calculateShift(
+	transformX: number,
+	step: number,
+	direction: "left" | "right",
+) {
+	if (direction === "left") {
+		return transformX - step;
+	}
+
+	return transformX + step;
+}
 
 export function useCarousel() {
 	const targetParent = useRef<ElementRef<"div"> | null>(null);
 	const targetChild = useRef<ElementRef<"div"> | null>(null);
 	const observer = useRef<ResizeObserver>();
+	const transformX = useRef(0);
 	const [showLeftButton, setShowLeftButton] = useState(false);
 	const [showRightButton, setShowRightButton] = useState(false);
-	const [transformRight, setTransformRight] = useState(0);
-	const [transformLeft, setTransformLeft] = useState(0);
 
-	useEffect(() => {
-		if (!targetChild.current || !targetParent.current) return;
-
-		const handleResize = (entries: ResizeObserverEntry[]) => {
+	const handleResize = useCallback(
+		(entries: ResizeObserverEntry[]) => {
 			if (!targetChild.current) return;
 
 			const entry = entries[0];
 			const containerWidth = targetChild.current.clientWidth;
-			const currentWidth = entry.contentRect.width - TOTLAL_GAP_BETWEEN_BUTTONS;
+			const currentWidth = entry.contentRect.width - TOTAL_GAP_BETWEEN_BUTTONS;
 			const shouldShowChips = containerWidth > currentWidth;
 
 			if (
@@ -36,7 +59,12 @@ export function useCarousel() {
 			if (!shouldShowChips && targetChild.current) {
 				targetChild.current.style.transform = "translate(0px)";
 			}
-		};
+		},
+		[showLeftButton, showRightButton],
+	);
+
+	useEffect(() => {
+		if (!targetChild.current || !targetParent.current) return;
 
 		observer.current = new ResizeObserver(handleResize);
 		if (targetParent.current) {
@@ -49,51 +77,46 @@ export function useCarousel() {
 			}
 			observer.current?.disconnect();
 		};
-	}, [showLeftButton, showRightButton]);
+	}, [handleResize]);
 
-	function handleMoveLeft() {
+	const handleMoveLeft = useCallback(() => {
 		if (!targetChild.current || !targetParent.current) return;
 
 		const containerWidth = targetChild.current.clientWidth;
 		const currentWidth =
-			targetParent.current.clientWidth - TOTLAL_GAP_BETWEEN_BUTTONS;
+			targetParent.current.clientWidth - TOTAL_GAP_BETWEEN_BUTTONS;
 
-		const transformations = Math.ceil(containerWidth / currentWidth);
-		const step = (containerWidth - currentWidth) / transformations;
+		const step = calculateStep(containerWidth, currentWidth);
+		const shift = calculateShift(transformX.current, step, "left");
 
-		setTransformLeft((prev) => {
-			if (Math.abs(prev) + step > containerWidth - currentWidth) {
-				return -(containerWidth - currentWidth);
-			}
+		// TODO: fix this case
+		if (shift > -(containerWidth - currentWidth)) {
+			transformX.current = 0;
+			targetChild.current.style.transform = `translate(-${transformX.current}px)`;
+		}
 
-			return Math.max(
-				-(containerWidth - currentWidth - (Math.abs(prev) + step)),
-				-(containerWidth - currentWidth),
-			);
-		});
+		transformX.current = Math.max(shift, -(containerWidth - currentWidth));
+		targetChild.current.style.transform = `translate(-${transformX.current}px)`;
+	}, []);
 
-		targetChild.current.style.transform = `translate(${transformLeft}px)`;
-	}
-
-	function handleMoveRight() {
+	const handleMoveRight = useCallback(() => {
 		if (!targetChild.current || !targetParent.current) return;
 
 		const containerWidth = targetChild.current.clientWidth;
 		const currentWidth =
-			targetParent.current.clientWidth - TOTLAL_GAP_BETWEEN_BUTTONS;
+			targetParent.current.clientWidth - TOTAL_GAP_BETWEEN_BUTTONS;
 
-		const transformations = Math.ceil(containerWidth / currentWidth);
-		const step = (containerWidth - currentWidth) / transformations;
+		const step = calculateStep(containerWidth, currentWidth);
+		const shift = calculateShift(transformX.current, step, "right");
 
-		setTransformRight((prev) => {
-			if (prev + step > containerWidth - currentWidth) {
-				return 0;
-			}
-			return Math.min(prev + step, containerWidth - currentWidth);
-		});
+		if (shift > containerWidth - currentWidth) {
+			transformX.current = containerWidth - currentWidth;
+			targetChild.current.style.transform = `translate(-${transformX.current}px)`;
+		}
 
-		targetChild.current.style.transform = `translate(-${transformRight}px)`;
-	}
+		transformX.current = Math.min(shift, containerWidth - currentWidth);
+		targetChild.current.style.transform = `translate(-${transformX.current}px)`;
+	}, []);
 
 	return {
 		targetParent,
