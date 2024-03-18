@@ -15,6 +15,8 @@ async function getAccessToken(code: string | null) {
 			grant_type: "authorization_code",
 			redirect_uri: REDIRECT_URI,
 			code: code,
+		},
+		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	});
@@ -26,6 +28,8 @@ async function getRefreshToken(refreshToken: string | undefined) {
 		options: {
 			grant_type: "refresh_token",
 			refresh_token: refreshToken,
+		},
+		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	});
