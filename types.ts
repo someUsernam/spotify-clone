@@ -1,4 +1,4 @@
-// utils
+// primitives
 
 type QueryProps = {
 	params: {
@@ -6,16 +6,15 @@ type QueryProps = {
 	};
 };
 
-type CommonTypes = {
-	external_urls: {
-		spotify: string;
-	};
+type CommonTypes<T> = {
+	external_urls: ExternalUrls;
 	href: string;
 	id: string;
-	type: string;
+	type: T;
 	uri: string;
 };
 
+//TODO: Image type for height and width might be null
 type Image = {
 	url: string;
 	height: number;
@@ -44,7 +43,7 @@ type ExplicitContent = {
 
 type User = {
 	followers: Follower;
-} & CommonTypes;
+} & CommonTypes<"TODO">;
 
 type Owner = User & {
 	display_name: string;
@@ -70,6 +69,66 @@ type DetailedPlaylistTrack = {
 	added_by: User;
 	is_local: boolean;
 	track: Track;
+};
+
+type VolumePercent = number | null;
+
+type PreviewUrl = string | null;
+
+type LinkedFrom = CommonTypes<"TODO"> | null;
+
+type ResumePoint = {
+	fully_played: boolean;
+	resume_position_ms: number;
+};
+
+type AudioPreviewUrl = string | null;
+
+type Explicit = boolean | unknown;
+
+type Device = {
+	id: string;
+	is_active: boolean;
+	is_private_session: boolean;
+	is_restricted: boolean;
+	name: string;
+	type: string;
+	volume_percent: VolumePercent;
+	supports_volume: boolean;
+};
+
+type Context = {
+	external_urls: ExternalUrls;
+	href: string;
+	type: string;
+	uri: string;
+} | null;
+
+type ProgressMs = number | null;
+
+type ExternalUrls = {
+	spotify: string;
+};
+
+// TODO: check proper name for property copyright. is it Copyrights or Copyright
+type Copyright = [
+	{
+		text: string;
+		type: string;
+	},
+];
+
+type Actions = {
+	interupting_playback: boolean;
+	pausing: boolean;
+	resuming: boolean;
+	seeking: boolean;
+	skipping_next: boolean;
+	skipping_prev: boolean;
+	toggling_repeat_context: boolean;
+	toggling_shuffle: boolean;
+	toggling_repeat_track: boolean;
+	transferring_playback: boolean;
 };
 
 type ErrorType =
@@ -101,7 +160,7 @@ type Album = {
 	release_date_precision: string;
 	restrictions: Restriction;
 	artists: Artist[];
-} & CommonTypes;
+} & CommonTypes<"album">;
 
 type Artist = {
 	followers: Follower;
@@ -109,7 +168,7 @@ type Artist = {
 	images: Image[];
 	name: string;
 	popularity: number;
-} & CommonTypes;
+} & CommonTypes<"artist">;
 
 type Track = {
 	album: Album;
@@ -120,23 +179,18 @@ type Track = {
 	explicit: boolean;
 	external_ids: ExternalId;
 	is_playable: boolean;
-	linked_from: CommonTypes | null;
+	linked_from: LinkedFrom;
 	restrictions: Restriction;
 	name: string;
 	popularity: number;
-	preview_url: string | null;
+	preview_url: PreviewUrl;
 	track_number: number;
 	is_local: boolean;
-} & CommonTypes;
+} & CommonTypes<"track">;
 
 type Show = {
 	available_markets: string[];
-	copyright: [
-		{
-			text: string;
-			type: string;
-		},
-	];
+	copyright: Copyright;
 	description: string;
 	images: Image[];
 	html_description: string;
@@ -147,7 +201,7 @@ type Show = {
 	name: string;
 	publisher: string;
 	total_episodes: number;
-} & CommonTypes;
+} & CommonTypes<"show">;
 
 type Audiobook = {
 	authors: [
@@ -179,11 +233,11 @@ type Audiobook = {
 };
 
 type Episode = {
-	audio_preview_url: string;
+	audio_preview_url: AudioPreviewUrl;
 	description: string;
 	html_description: string;
 	duration_ms: number;
-	explicit: boolean;
+	explicit: Explicit;
 	images: Image[];
 	is_externally_hosted: boolean;
 	is_playable: boolean;
@@ -191,12 +245,10 @@ type Episode = {
 	name: string;
 	release_date: string;
 	release_date_precision: string;
-	resume_point: {
-		fully_played: boolean;
-		resume_position_ms: number;
-	};
+	resume_point: ResumePoint;
 	restrictions: Restriction;
-} & CommonTypes;
+	show: Show;
+} & CommonTypes<"episode">;
 
 type Category = {
 	href: string;
@@ -237,7 +289,7 @@ type UserProfile = {
 	followers: Follower;
 	images: Image[];
 	product: string;
-} & CommonTypes;
+} & CommonTypes<"user">;
 
 type UserSavedTrack = {
 	added_at: string;
@@ -253,7 +305,7 @@ type Playlist<T> = {
 	public: boolean;
 	snapshot_id: string;
 	tracks: PagingObject<T>;
-} & CommonTypes;
+} & CommonTypes<"playlist">;
 
 type Search = {
 	tracks: PagingObject<Track>;
@@ -272,6 +324,32 @@ type CategoryPlaylist = {
 	massage: string;
 	playlists: PagingObject<Playlist<PlaylistTrack>>;
 };
+
+type CurrentlyPlayingTrack = Errorable<{
+	device: Device;
+	repeat_state: string;
+	shuffle_state: string;
+	context: Context;
+	timestamp: number;
+	progress_ms: ProgressMs;
+	is_playing: boolean;
+	item: Track | Episode | null;
+	currently_playing_type: string;
+	actions: Actions;
+}>;
+
+type PlaybackState = Errorable<{
+	device: Device;
+	repeat_state: string;
+	shuffle_state: string;
+	context: Context;
+	timestamp: number;
+	progress_ms: ProgressMs;
+	is_playing: boolean;
+	item: Track | Episode | null;
+	currently_playing_type: string;
+	actions: Actions;
+}>;
 
 type CategoriesPlaylists = Errorable<CategoryPlaylist>;
 
