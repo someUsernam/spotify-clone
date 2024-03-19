@@ -1,7 +1,11 @@
 "use server";
 
 import { fetcher } from "@/shared/utils/fetcher";
-import { REDIRECT_URI, TOKEN_ENDPOINT } from "@utils/constants";
+import {
+	REDIRECT_URI,
+	SPOTIFY_API_ORIGIN,
+	TOKEN_ENDPOINT,
+} from "@utils/constants";
 
 const MAX_ITEMS_IN_ROW = "8";
 const MAX_ITEMS_IN_COLUMN = "10";
@@ -127,7 +131,7 @@ async function getArtist(artistId: string) {
 }
 
 async function getPlaybackState() {
-	return await fetcher.get({
+	return await fetcher.get<PlaybackState>({
 		endpoint: "/v1/me/player",
 	});
 }
@@ -139,7 +143,7 @@ async function getAvailableDevices() {
 }
 
 async function getCurrentlyPlayingTrack() {
-	return await fetcher.get({
+	return await fetcher.get<CurrentlyPlayingTrack>({
 		endpoint: "/v1/me/player/currently-playing",
 	});
 }
@@ -155,7 +159,7 @@ async function getRecentlyPlayedTracks() {
 
 async function transferPlayback(divaceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player`,
 		options: {
 			device_ids: [divaceId],
 		},
@@ -167,7 +171,7 @@ async function transferPlayback(divaceId: string) {
 
 async function startOrResumePlayback(deviceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/play",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/play`,
 		options: {
 			device_id: deviceId,
 		},
@@ -179,7 +183,7 @@ async function startOrResumePlayback(deviceId: string) {
 
 async function pausePlayback(deviceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/pause",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/pause`,
 		options: {
 			device_id: deviceId,
 		},
@@ -188,7 +192,7 @@ async function pausePlayback(deviceId: string) {
 
 async function skipToNext(deviceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/next",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/next`,
 		options: {
 			device_id: deviceId,
 		},
@@ -197,7 +201,7 @@ async function skipToNext(deviceId: string) {
 
 async function skipToPrevious(deviceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/previous",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/previous`,
 		options: {
 			device_id: deviceId,
 		},
@@ -206,7 +210,7 @@ async function skipToPrevious(deviceId: string) {
 
 async function seekToPosition(deviceId: string, position: number) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/seek",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/seek`,
 		options: {
 			position_ms: position,
 			device_id: deviceId,
@@ -219,7 +223,7 @@ async function seekToPosition(deviceId: string, position: number) {
 
 async function setRepeatMode(deviceId: string, state: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/repeat",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/repeat`,
 		options: {
 			state,
 			device_id: deviceId,
@@ -232,7 +236,7 @@ async function setRepeatMode(deviceId: string, state: string) {
 
 async function setVolume(deviceId: string, volume: number) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/volume",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/volume`,
 		options: {
 			volume_percent: volume,
 			device_id: deviceId,
@@ -245,7 +249,7 @@ async function setVolume(deviceId: string, volume: number) {
 
 async function toggleShuffle(deviceId: string, state: boolean) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/shuffle",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/shuffle`,
 		options: {
 			state,
 			device_id: deviceId,
@@ -264,7 +268,7 @@ async function getUserQueue() {
 
 async function addToQueue(uri: string, deviceId: string) {
 	return await fetcher.post({
-		endpoint: "/v1/me/player/queue",
+		endpoint: `${SPOTIFY_API_ORIGIN}/v1/me/player/queue`,
 		options: {
 			uri,
 			device_id: deviceId,

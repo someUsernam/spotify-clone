@@ -14,6 +14,7 @@ const variants = {
 	"dark-md": `${base} dark:bg-secondary dark:text-primary px-4 py-2 h-10 text-base`,
 	"dark-lg": `${base} dark:bg-secondary dark:text-primary px-8 py-2 h-12 text-base`,
 	"outline-sm": `${base} dark:border-main-essential-subdued dark:text-primary px-3 py-1.5 text-sm border gap-1 dark:hover:border-main-essential-primary flex items-center `,
+	none: `${base}`,
 };
 
 interface ButtonProps extends ComponentPropsWithRef<"button"> {
