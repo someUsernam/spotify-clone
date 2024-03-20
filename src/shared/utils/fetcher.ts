@@ -1,6 +1,7 @@
 import { SPOTIFY_API_ORIGIN, basic } from "@utils/constants";
 import { cookies } from "next/headers";
 import querystring from "querystring";
+import { setSearchParams } from "./setSearchParams";
 
 type FetcherGetParams = {
 	readonly endpoint: string;
@@ -15,15 +16,8 @@ type FetcherPostParams = {
 		string | string[] | number | boolean | undefined | null
 	>;
 	readonly headers?: Record<string, string>;
+	readonly params?: Record<string, string>;
 };
-
-function setSearchParams(url: URL, params: Record<string, string>) {
-	for (const [key, value] of Object.entries(params)) {
-		if (value !== undefined) {
-			url.searchParams.set(key, value);
-		}
-	}
-}
 
 const fetcher = (() => {
 	async function get<T>({
@@ -58,8 +52,13 @@ const fetcher = (() => {
 		endpoint,
 		options,
 		headers,
+		params = {},
 	}: FetcherPostParams): Promise<T> {
-		const response = await fetch(endpoint, {
+		const url = new URL(endpoint);
+
+		setSearchParams(url, params);
+
+		const response = await fetch(url, {
 			method: "POST",
 			headers: {
 				Authorization: `Basic ${basic}`,
@@ -81,8 +80,13 @@ const fetcher = (() => {
 		endpoint,
 		options,
 		headers,
+		params = {},
 	}: FetcherPostParams): Promise<T> {
-		const response = await fetch(endpoint, {
+		const url = new URL(endpoint);
+
+		setSearchParams(url, params);
+
+		const response = await fetch(url, {
 			method: "PUT",
 			headers: {
 				Authorization: `Basic ${basic}`,
