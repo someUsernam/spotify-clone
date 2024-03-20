@@ -196,15 +196,38 @@ async function skipToPrevious() {
 	});
 }
 
-async function seekToPosition(positionMs: number, deviceId: string) {
+async function seekToPosition(positionMs: number) {
 	return await fetcher.put({
 		endpoint: `${origin}${player.seek}`,
-		options: {
+		params: {
 			position_ms: positionMs,
-			device_id: deviceId,
 		},
-		headers: {
-			"Content-Type": "application/json",
+	});
+}
+
+async function setRepeatMode(state: "off" | "track" | "context") {
+	return await fetcher.put({
+		endpoint: `${origin}${player.repeat}`,
+		params: {
+			state,
+		},
+	});
+}
+
+async function setVolume(volume: number) {
+	return await fetcher.put({
+		endpoint: `${origin}${player.volume}`,
+		params: {
+			volume_percent: volume,
+		},
+	});
+}
+
+async function toggleShuffle(state: boolean) {
+	return await fetcher.put({
+		endpoint: `${origin}${player.shuffle}`,
+		params: {
+			state,
 		},
 	});
 }
@@ -218,60 +241,17 @@ async function getRecentlyPlayedTracks() {
 	});
 }
 
-async function setRepeatMode(deviceId: string, state: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.repeat}`,
-		options: {
-			state,
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
-
-async function setVolume(deviceId: string, volume: number) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.volume}`,
-		options: {
-			volume_percent: volume,
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
-
-async function toggleShuffle(deviceId: string, state: boolean) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.shuffle}`,
-		options: {
-			state,
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
-
 async function getUserQueue() {
 	return await fetcher.get({
 		endpoint: player.queue,
 	});
 }
 
-async function addToQueue(uri: string, deviceId: string) {
+async function addToQueue(uri: string) {
 	return await fetcher.post({
 		endpoint: `${origin}${player.addToQueue}`,
-		options: {
+		params: {
 			uri,
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
 		},
 	});
 }

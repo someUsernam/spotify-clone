@@ -5,7 +5,7 @@ import { setSearchParams } from "./setSearchParams";
 
 type FetcherGetParams = {
 	readonly endpoint: string;
-	readonly params?: Record<string, string>;
+	readonly params?: Record<string, string | number | boolean>;
 	readonly options?: Record<string, string | undefined | null>;
 };
 
@@ -16,7 +16,7 @@ type FetcherPostParams = {
 		string | string[] | number | boolean | undefined | null
 	>;
 	readonly headers?: Record<string, string>;
-	readonly params?: Record<string, string>;
+	readonly params?: Record<string, string | number | boolean>;
 };
 
 const fetcher = (() => {
