@@ -77,7 +77,55 @@ const fetcher = (() => {
 		return data;
 	}
 
+	async function put<T>({
+		endpoint,
+		options,
+		headers,
+	}: FetcherPostParams): Promise<T> {
+		const response = await fetch(endpoint, {
+			method: "PUT",
+			headers: {
+				Authorization: `Basic ${basic}`,
+				...headers,
+			},
+			body: querystring.stringify(options),
+		});
+
+		if (!response.ok) {
+			return response as unknown as T;
+		}
+
+		const data: T = await response.json();
+
+		return data;
+	}
+
+	async function del<T>({
+		endpoint,
+		options,
+		headers,
+	}: FetcherPostParams): Promise<T> {
+		const response = await fetch(endpoint, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Basic ${basic}`,
+				...headers,
+			},
+			body: querystring.stringify(options),
+		});
+
+		if (!response.ok) {
+			return response as unknown as T;
+		}
+
+		const data: T = await response.json();
+
+		return data;
+	}
+
 	return {
+		del,
+		put,
 		get,
 		post,
 	};
