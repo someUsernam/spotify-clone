@@ -145,6 +145,18 @@ async function getPlaybackState() {
 	});
 }
 
+async function transferPlayback(deviceIds: string[], play = false) {
+	return await fetcher.put({
+		endpoint: `${origin}${player.transferPlayback}`,
+		options: {
+			device_ids: deviceIds,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
 async function getAvailableDevices() {
 	return await fetcher.get({
 		endpoint: player.devices,
@@ -157,75 +169,51 @@ async function getCurrentlyPlayingTrack() {
 	});
 }
 
+async function startOrResumePlayback() {
+	return await fetcher.put({
+		endpoint: `${origin}${player.play}`,
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
+async function pausePlayback() {
+	return await fetcher.put({
+		endpoint: `${origin}${player.pause}`,
+	});
+}
+
+async function skipToNext() {
+	return await fetcher.post({
+		endpoint: `${origin}${player.next}`,
+	});
+}
+
+async function skipToPrevious() {
+	return await fetcher.post({
+		endpoint: `${origin}${player.previous}`,
+	});
+}
+
+async function seekToPosition(positionMs: number, deviceId: string) {
+	return await fetcher.put({
+		endpoint: `${origin}${player.seek}`,
+		options: {
+			position_ms: positionMs,
+			device_id: deviceId,
+		},
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+}
+
 async function getRecentlyPlayedTracks() {
 	return await fetcher.get({
 		endpoint: player.recentlyPlayed,
 		params: {
 			limit: MAX_ITEMS_IN_ROW,
-		},
-	});
-}
-
-async function transferPlayback(divaceId: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.transferPlayback}`,
-		options: {
-			device_ids: [divaceId],
-		},
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
-
-async function startOrResumePlayback(deviceId: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.play}`,
-		options: {
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
-
-async function pausePlayback(deviceId: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.pause}`,
-		options: {
-			device_id: deviceId,
-		},
-	});
-}
-
-async function skipToNext(deviceId: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.next}`,
-		options: {
-			device_id: deviceId,
-		},
-	});
-}
-
-async function skipToPrevious(deviceId: string) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.previous}`,
-		options: {
-			device_id: deviceId,
-		},
-	});
-}
-
-async function seekToPosition(deviceId: string, position: number) {
-	return await fetcher.post({
-		endpoint: `${origin}${player.seek}`,
-		options: {
-			position_ms: position,
-			device_id: deviceId,
-		},
-		headers: {
-			"Content-Type": "application/json",
 		},
 	});
 }
