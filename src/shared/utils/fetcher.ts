@@ -1,15 +1,7 @@
-import { SPOTIFY_API_ORIGIN, basic } from "@utils/constants";
-import { cookies } from "next/headers";
 import querystring from "querystring";
 import { setSearchParams } from "./setSearchParams";
 
-type FetcherGetParams = {
-	readonly endpoint: string;
-	readonly params?: Record<string, string | number | boolean>;
-	readonly options?: Record<string, string | undefined | null>;
-};
-
-type FetcherPostParams = {
+type FetcherParams = {
 	readonly endpoint: string;
 	readonly options?: Record<
 		string,
@@ -22,20 +14,16 @@ type FetcherPostParams = {
 const fetcher = (() => {
 	async function get<T>({
 		endpoint,
+		headers = {},
 		params = {},
 		options = {},
-	}: FetcherGetParams): Promise<T> {
-		const cookieStore = cookies();
-		const token = cookieStore.get("access_token")?.value;
-
-		const url = new URL(`${SPOTIFY_API_ORIGIN}${endpoint}`);
+	}: FetcherParams): Promise<T> {
+		const url = new URL(endpoint);
 
 		setSearchParams(url, params);
 
 		const response = await fetch(url, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
+			headers,
 			...options,
 		});
 
@@ -50,20 +38,17 @@ const fetcher = (() => {
 
 	async function post<T>({
 		endpoint,
-		options,
-		headers,
+		options = {},
+		headers = {},
 		params = {},
-	}: FetcherPostParams): Promise<T> {
+	}: FetcherParams): Promise<T> {
 		const url = new URL(endpoint);
 
 		setSearchParams(url, params);
 
 		const response = await fetch(url, {
 			method: "POST",
-			headers: {
-				Authorization: `Basic ${basic}`,
-				...headers,
-			},
+			headers,
 			body: querystring.stringify(options),
 		});
 
@@ -78,20 +63,17 @@ const fetcher = (() => {
 
 	async function put<T>({
 		endpoint,
-		options,
-		headers,
+		options = {},
+		headers = {},
 		params = {},
-	}: FetcherPostParams): Promise<T> {
+	}: FetcherParams): Promise<T> {
 		const url = new URL(endpoint);
 
 		setSearchParams(url, params);
 
 		const response = await fetch(url, {
 			method: "PUT",
-			headers: {
-				Authorization: `Basic ${basic}`,
-				...headers,
-			},
+			headers,
 			body: querystring.stringify(options),
 		});
 
@@ -106,15 +88,12 @@ const fetcher = (() => {
 
 	async function del<T>({
 		endpoint,
-		options,
-		headers,
-	}: FetcherPostParams): Promise<T> {
+		options = {},
+		headers = {},
+	}: FetcherParams): Promise<T> {
 		const response = await fetch(endpoint, {
 			method: "DELETE",
-			headers: {
-				Authorization: `Basic ${basic}`,
-				...headers,
-			},
+			headers,
 			body: querystring.stringify(options),
 		});
 

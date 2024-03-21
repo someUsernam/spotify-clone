@@ -11,7 +11,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import querystring from "querystring";
 
-const { auth } = endpoint.spotify;
+const { authEndpoint } = endpoint.spotify;
 
 export async function GET() {
 	const state = generateRandomString(16);
@@ -27,5 +27,5 @@ export async function GET() {
 		state,
 	});
 
-	return NextResponse.redirect(`${auth}?${queryParams}`);
+	return NextResponse.redirect(`${authEndpoint}?${queryParams}`);
 }
