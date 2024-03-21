@@ -376,8 +376,8 @@ type UserSavedTracks = ErrorTypeAndPaging<UserSavedTrack>;
 type ApiEndpoint = {
 	spotify: {
 		origin: string;
-		token: string;
-		auth: string;
+		tokenEndpoint: string;
+		authEndpoint: string;
 		album: {
 			several: string;
 			single: (id: string) => string;

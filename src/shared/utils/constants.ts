@@ -31,8 +31,8 @@ const CODE_KEY = "code";
 const endpoint: ApiEndpoint = {
 	spotify: {
 		origin: SPOTIFY_API_ORIGIN,
-		token: TOKEN_ENDPOINT,
-		auth: AUTH_ENDPOINT,
+		tokenEndpoint: TOKEN_ENDPOINT,
+		authEndpoint: AUTH_ENDPOINT,
 		album: {
 			several: "/v1/albums",
 			single: (id: string) => `/v1/albums/${id}`,

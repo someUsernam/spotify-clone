@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { endpoint } from "./shared/utils/constants";
 
 const SECOND = 1000;
 const EXPIRES_IN_KEY = "expires_in";
@@ -12,12 +13,30 @@ function isExpired(expires_in: number, creation_time: number) {
 	return Date.now() > creation_time + expires_in * SECOND;
 }
 
+// const { spotify } = endpoint;
+
 export async function middleware(request: NextRequest) {
 	const cookieStore = cookies();
 	const expires_in = Number(cookieStore.get(EXPIRES_IN_KEY)?.value);
 	const creation_time = Number(cookieStore.get(CREATION_TIME_KEY)?.value);
 	const access_token = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
 	const { pathname, origin } = new URL(request.url);
+
+	//TODO: middleware headers setting,
+	// CURRENT PROBLEM: next is not intercepting fetch requests nor server functions
+	// check if request is to spotify api
+	// console.log({ requestUrl: request.url });
+	// if (request.url.startsWith(spotify.origin)) {
+	// 	console.log("middleware: spotify api 😀");
+	// 	const requestHeaders = new Headers(request.headers);
+	// 	requestHeaders.set("Authorization", `Bearer ${access_token}`);
+
+	// 	return NextResponse.next({
+	// 		request: {
+	// 			headers: requestHeaders,
+	// 		},
+	// 	});
+	// }
 
 	if (Number.isNaN(expires_in) || Number.isNaN(creation_time)) {
 		console.log(
