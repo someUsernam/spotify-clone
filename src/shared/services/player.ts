@@ -2,13 +2,13 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_KEY, TAGS, endpoint } from "../utils/constants";
+import { KEYS, TAGS, endpoint } from "../utils/constants";
 
 const { origin, player } = endpoint.spotify;
 
 async function skipToNext() {
 	const cookieStore = cookies();
-	const access_token = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
+	const access_token = cookieStore.get(KEYS.access_token)?.value;
 
 	try {
 		console.log("post skip to next");
@@ -36,7 +36,7 @@ async function getCurrentlyPlayingTrack(): Promise<
 	CurrentlyPlayingTrack | undefined
 > {
 	const cookieStore = cookies();
-	const access_token = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
+	const access_token = cookieStore.get(KEYS.access_token)?.value;
 
 	try {
 		console.log("fetch currently playing track");

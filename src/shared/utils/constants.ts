@@ -1,7 +1,4 @@
 const DEV_URL = process.env.NEXT_PUBLIC_DEV_URL;
-const SPOTIFY_API_ORIGIN = "https://api.spotify.com";
-const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URI = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -22,12 +19,14 @@ const SCOPES = [
 	"user-read-recently-played",
 ].join(" ");
 
-const ACCESS_TOKEN_KEY = "access_token";
-const REFRESH_TOKEN_KEY = "refresh_token";
-const CREATION_TIME_KEY = "creation_time";
-const EXPIRES_IN_KEY = "expires_in";
-const STATE_KEY = "state";
-const CODE_KEY = "code";
+const KEYS = {
+	access_token: "access_token",
+	refresh_token: "refresh_token",
+	creation_time: "creation_time",
+	expires_in: "expires_in",
+	state: "state",
+	code: "code",
+} as const;
 
 const TAGS = {
 	get_user_profile: "get_user_profile",
@@ -89,9 +88,9 @@ const LINKS = {
 
 const endpoint = {
 	spotify: {
-		origin: SPOTIFY_API_ORIGIN,
-		tokenEndpoint: TOKEN_ENDPOINT,
-		authEndpoint: AUTH_ENDPOINT,
+		origin: "https://api.spotify.com",
+		tokenEndpoint: "https://accounts.spotify.com/api/token",
+		authEndpoint: "https://accounts.spotify.com/authorize",
 		album: {
 			several: "/v1/albums",
 			single: (id: string) => `/v1/albums/${id}`,
@@ -213,22 +212,14 @@ const endpoint = {
 } as const;
 
 export {
-	ACCESS_TOKEN_KEY,
-	AUTH_ENDPOINT,
 	CLIENT_ID,
 	CLIENT_SECRET,
-	CODE_KEY,
-	CREATION_TIME_KEY,
 	DEV_URL,
-	EXPIRES_IN_KEY,
+	KEYS,
 	LINKS,
 	REDIRECT_URI,
-	REFRESH_TOKEN_KEY,
 	SCOPES,
-	SPOTIFY_API_ORIGIN,
-	STATE_KEY,
 	TAGS,
-	TOKEN_ENDPOINT,
 	basic,
 	endpoint,
 };

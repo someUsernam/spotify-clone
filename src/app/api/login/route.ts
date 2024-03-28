@@ -1,10 +1,9 @@
 import { generateRandomString } from "@/shared/utils/generateRandomString";
 import {
 	CLIENT_ID,
-	CODE_KEY,
+	KEYS,
 	REDIRECT_URI,
 	SCOPES,
-	STATE_KEY,
 	endpoint,
 } from "@utils/constants";
 import { cookies } from "next/headers";
@@ -17,11 +16,11 @@ export async function GET() {
 	const state = generateRandomString(16);
 
 	const cookieStore = cookies();
-	cookieStore.set(STATE_KEY, state);
+	cookieStore.set(KEYS.state, state);
 
 	const queryParams = querystring.stringify({
 		client_id: CLIENT_ID,
-		response_type: CODE_KEY,
+		response_type: KEYS.code,
 		redirect_uri: REDIRECT_URI,
 		scope: SCOPES,
 		state,
