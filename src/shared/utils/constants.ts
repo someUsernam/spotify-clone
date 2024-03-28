@@ -21,6 +21,7 @@ const SCOPES = [
 	"user-modify-playback-state",
 	"user-read-recently-played",
 ].join(" ");
+
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
 const CREATION_TIME_KEY = "creation_time";
@@ -28,7 +29,65 @@ const EXPIRES_IN_KEY = "expires_in";
 const STATE_KEY = "state";
 const CODE_KEY = "code";
 
-const endpoint: ApiEndpoint = {
+const TAGS = {
+	get_user_profile: "get_user_profile",
+	get_top_tracks: "get_top_tracks",
+	get_top_artists: "get_top_artists",
+	get_user_saved_tracks: "get_user_saved_tracks",
+	get_user_playlists: "get_user_playlists",
+	get_playlist: "get_playlist",
+	get_search: "get_search",
+	get_several_categories: "get_several_categories",
+	get_single_category: "get_single_category",
+	get_category_playlist: "get_category_playlist",
+	get_artist: "get_artist",
+	get_playback_state: "get_playback_state",
+	get_available_devices: "get_available_devices",
+	get_currently_playing_track: "get_currently_playing_track",
+	get_recently_played_tracks: "get_recently_played_tracks",
+	get_user_queue: "get_user_queue",
+} as const;
+
+const LINKS = {
+	origin: DEV_URL,
+	home: "/",
+	login: "/api/login",
+	refresh: "/api/refresh",
+	logout: "/api/logout",
+	category: {
+		id: (id: string) => `/${id}`,
+	},
+	album: {
+		id: (id: string) => `/album/${id}`,
+	},
+	artist: {
+		id: (id: string) => `/artist/${id}`,
+	},
+	episode: {
+		id: (id: string) => `/episode/${id}`,
+	},
+	playlist: {
+		id: (id: string) => `/playlist/${id}`,
+	},
+	track: {
+		id: (id: string) => `/track/${id}`,
+	},
+	search: {
+		id: (id: string) => `/search/${id}`,
+		albums: "/search/albums",
+		artists: "/search/artists",
+		genres: "/search/genres",
+		playlists: "/search/playlists",
+		podcastAndEpisodes: "/search/podcastAndEpisodes",
+		tracks: "/search/tracks",
+		users: "/search/users",
+	},
+	user: {
+		id: (id: string) => `/user/${id}`,
+	},
+} as const;
+
+const endpoint = {
 	spotify: {
 		origin: SPOTIFY_API_ORIGIN,
 		tokenEndpoint: TOKEN_ENDPOINT,
@@ -154,20 +213,22 @@ const endpoint: ApiEndpoint = {
 } as const;
 
 export {
+	ACCESS_TOKEN_KEY,
 	AUTH_ENDPOINT,
 	CLIENT_ID,
 	CLIENT_SECRET,
+	CODE_KEY,
+	CREATION_TIME_KEY,
 	DEV_URL,
+	EXPIRES_IN_KEY,
+	LINKS,
 	REDIRECT_URI,
+	REFRESH_TOKEN_KEY,
 	SCOPES,
 	SPOTIFY_API_ORIGIN,
+	STATE_KEY,
+	TAGS,
 	TOKEN_ENDPOINT,
 	basic,
 	endpoint,
-	ACCESS_TOKEN_KEY,
-	REFRESH_TOKEN_KEY,
-	CREATION_TIME_KEY,
-	EXPIRES_IN_KEY,
-	STATE_KEY,
-	CODE_KEY,
 };

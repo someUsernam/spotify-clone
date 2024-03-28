@@ -1,4 +1,5 @@
 // primitives
+type TODO = any;
 
 type QueryProps = {
 	params: {
@@ -131,18 +132,16 @@ type Actions = {
 	transferring_playback: boolean;
 };
 
-type ErrorType =
-	| {
-			error: {
-				status: number;
-				message: string;
-			};
-	  }
-	| undefined;
+type ErrorType = {
+	error: {
+		status: number;
+		message: string;
+	};
+};
 
 type ErrorTypeAndPaging<T> = PagingObject<T> & ErrorType;
 
-type Errorable<T> = T & ErrorType;
+type Errorable<T> = T | ErrorType;
 
 interface ChildrenProps {
 	children?: React.ReactNode;
@@ -370,129 +369,3 @@ type TopArtists = ErrorTypeAndPaging<Artist>;
 type TopTracks = ErrorTypeAndPaging<Track>;
 
 type UserSavedTracks = ErrorTypeAndPaging<UserSavedTrack>;
-
-// endpoint
-
-type ApiEndpoint = {
-	spotify: {
-		origin: string;
-		tokenEndpoint: string;
-		authEndpoint: string;
-		album: {
-			several: string;
-			single: (id: string) => string;
-			tracks: (id: string) => string;
-			saved: string;
-			save: string;
-			remove: string;
-			contains: string;
-			newReleases: string;
-		};
-		artists: {
-			several: string;
-			single: (id: string) => string;
-			albums: (id: string) => string;
-			topTracks: (id: string) => string;
-			realted: (id: string) => string;
-		};
-		audiobooks: {
-			several: string;
-			single: (id: string) => string;
-			chapters: (id: string) => string;
-			saved: string;
-			save: string;
-			remove: string;
-			contains: string;
-		};
-		categories: {
-			several: string;
-			single: (id: string) => string;
-		};
-		chapters: {
-			several: string;
-			single: (id: string) => string;
-		};
-		episodes: {
-			several: string;
-			single: (id: string) => string;
-			saved: string;
-			save: string;
-			remove: string;
-			contains: string;
-		};
-		genres: {
-			availableGenreSeeds: string;
-		};
-		markets: {
-			availableMarkets: string;
-		};
-		player: {
-			state: string;
-			transferPlayback: string;
-			devices: string;
-			currentlyPlaying: string;
-			play: string;
-			pause: string;
-			next: string;
-			previous: string;
-			seek: string;
-			repeat: string;
-			volume: string;
-			shuffle: string;
-			recentlyPlayed: string;
-			queue: string;
-			addToQueue: string;
-		};
-		playlists: {
-			several: string;
-			single: (id: string) => string;
-			changeDetails: (id: string) => string;
-			items: (id: string) => string;
-			updateItems: (id: string) => string;
-			addItems: (id: string) => string;
-			removeItems: (id: string) => string;
-			currentUserPlaylists: string;
-			userPlaylists: (id: string) => string;
-			createPlaylist: (id: string) => string;
-			featured: string;
-			categories: (id: string) => string;
-			cover: (id: string) => string;
-		};
-		search: {
-			search: string;
-		};
-		shows: {
-			several: string;
-			single: (id: string) => string;
-			episodes: (id: string) => string;
-			saved: string;
-			save: string;
-			remove: string;
-			contains: string;
-		};
-		tracks: {
-			several: string;
-			single: (id: string) => string;
-			saved: string;
-			save: string;
-			remove: string;
-			contains: string;
-			severalFeatures: string;
-			singleFeatures: (id: string) => string;
-			analysis: (id: string) => string;
-			recommendations: string;
-		};
-		users: {
-			currentProfile: string;
-			topItems: (type: string) => string;
-			userProfile: (id: string) => string;
-			followPlaylist: (id: string) => string;
-			unfollowPlaylist: (id: string) => string;
-			followedArtists: string;
-			followArtistOrUser: string;
-			unfollowArtistOrUser: string;
-			checkIfUserFollows: string;
-			checkIfUserFollowsPlaylist: (id: string) => string;
-		};
-	};
-};

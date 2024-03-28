@@ -1,7 +1,7 @@
 "use server";
 
-import { fetcher } from "@/shared/utils/fetcher";
-import { REDIRECT_URI, basic, endpoint } from "@utils/constants";
+import { TAGS, endpoint } from "@utils/constants";
+import { revalidateTag } from "next/cache";
 import { spotifyGet, spotifyPost, spotifyPut } from "../utils/spotifyFetcher";
 
 const MAX_ITEMS_IN_ROW = "8";
@@ -22,67 +22,80 @@ const {
 	users,
 } = endpoint.spotify;
 
-async function getAccessToken(code: string | null) {
-	return await fetcher.post<Token>({
-		endpoint: tokenEndpoint,
-		options: {
-			grant_type: "authorization_code",
-			redirect_uri: REDIRECT_URI,
-			code: code,
-		},
-		headers: {
-			Authorization: `Basic ${basic}`,
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-	});
-}
+// async function getAccessToken(code: string | null) {
+// 	return await fetcher.post<Token>({
+// 		endpoint: tokenEndpoint,
+// 		body: {
+// 			grant_type: "authorization_code",
+// 			redirect_uri: REDIRECT_URI,
+// 			code: code,
+// 		},
+// 		headers: {
+// 			Authorization: `Basic ${basic}`,
+// 			"Content-Type": "application/x-www-form-urlencoded",
+// 		},
+// 	});
+// }
 
-async function getRefreshToken(refreshToken: string | undefined) {
-	return await fetcher.post<Token>({
-		endpoint: tokenEndpoint,
-		options: {
-			grant_type: "refresh_token",
-			refresh_token: refreshToken,
-		},
-		headers: {
-			Authorization: `Basic ${basic}`,
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-	});
-}
+// async function getRefreshToken(refreshToken: string | undefined) {
+// 	return await fetcher.post<Token>({
+// 		endpoint: tokenEndpoint,
+// 		body: {
+// 			grant_type: "refresh_token",
+// 			refresh_token: refreshToken,
+// 		},
+// 		headers: {
+// 			Authorization: `Basic ${basic}`,
+// 			"Content-Type": "application/x-www-form-urlencoded",
+// 		},
+// 	});
+// }
 
 async function getUserProfile() {
-	return spotifyGet<UserProfile>(`${origin}${users.currentProfile}`);
+	return spotifyGet<UserProfile>({
+		endpoint: `${origin}${users.currentProfile}`,
+	});
 }
 
 async function getTopTracks() {
-	return spotifyGet<TopTracks>(`${origin}${users.topItems("tracks")}`, {
-		time_range: "short_term",
-		limit: MAX_ITEMS_IN_ROW,
+	return spotifyGet<TopTracks>({
+		endpoint: `${origin}${users.topItems("tracks")}`,
+		params: {
+			time_range: "short_term",
+			limit: MAX_ITEMS_IN_ROW,
+		},
 	});
 }
 
 async function getTopArtists() {
-	return spotifyGet<TopArtists>(`${origin}${users.topItems("artists")}`, {
-		time_range: "short_term",
-		limit: MAX_ITEMS_IN_ROW,
+	return spotifyGet<TopArtists>({
+		endpoint: `${origin}${users.topItems("artists")}`,
+		params: {
+			time_range: "short_term",
+			limit: MAX_ITEMS_IN_ROW,
+		},
 	});
 }
 
 async function getUserSavedTracks() {
-	return spotifyGet<UserSavedTracks>(`${origin}${tracks.saved}`, {
-		limit: MAX_ITEMS_IN_ROW,
+	return spotifyGet<UserSavedTracks>({
+		endpoint: `${origin}${tracks.saved}`,
+		params: {
+			limit: MAX_ITEMS_IN_ROW,
+		},
 	});
 }
 
 async function getUserPlaylists(userId: string) {
-	return spotifyGet<UserPlaylists>(
-		`${origin}${playlists.userPlaylists(userId)}`,
-	);
+	return spotifyGet<UserPlaylists>({
+		endpoint: `${origin}${playlists.userPlaylists(userId)}`,
+	});
 }
 
 async function getPlaylist(playlistId: string) {
-	return spotifyGet<Playlists>(`${origin}${playlists.single(playlistId)}`);
+	return spotifyGet<Playlists>({
+		endpoint: `${origin}${playlists.single(playlistId)}`,
+	});
 }
 
 async function getSearch({
@@ -91,44 +104,52 @@ async function getSearch({
 	limit = MAX_ITEMS_IN_COLUMN,
 	offset = INITIAL_OFFSET,
 }: { query: string; type?: string; limit?: string; offset?: string }) {
-	return spotifyGet<SearchType>(`${origin}${search.search}`, {
-		q: query,
-		type,
-		limit,
-		offset,
+	return spotifyGet<SearchType>({
+		endpoint: `${origin}${search.search}`,
+		params: {
+			q: query,
+			type,
+			limit,
+			offset,
+		},
 	});
 }
 
 async function getSeveralCategories() {
-	return spotifyGet<SeveralCategories>(`${origin}${categories.several}`, {
-		limit: MAX_ITEMS_IN_PAGE,
+	return spotifyGet<SeveralCategories>({
+		endpoint: `${origin}${categories.several}`,
+		params: {
+			limit: MAX_ITEMS_IN_PAGE,
+		},
 	});
 }
 
 async function getSingleCategory(categoryId: string) {
-	return spotifyGet<SingleCategory>(
-		`${origin}${categories.single(categoryId)}`,
-	);
+	return spotifyGet<SingleCategory>({
+		endpoint: `${origin}${categories.single(categoryId)}`,
+	});
 }
 
 async function getCategoryPlaylist(categoryId: string) {
-	return spotifyGet<CategoriesPlaylists>(
-		`${origin}${playlists.categories(categoryId)}`,
-	);
+	return spotifyGet<CategoriesPlaylists>({
+		endpoint: `${origin}${playlists.categories(categoryId)}`,
+	});
 }
 
 async function getArtist(artistId: string) {
-	return spotifyGet<Artist>(`${origin}${artists.single(artistId)}`);
+	return spotifyGet<Artist>({
+		endpoint: `${origin}${artists.single(artistId)}`,
+	});
 }
 
 async function getPlaybackState() {
-	return spotifyGet<PlaybackState>(`${origin}${player.state}`);
+	return spotifyGet<PlaybackState>({ endpoint: `${origin}${player.state}` });
 }
 
 async function transferPlayback(deviceIds: string[], play = false) {
 	return spotifyPut({
 		endpoint: `${origin}${player.transferPlayback}`,
-		options: {
+		body: {
 			device_ids: deviceIds,
 			play,
 		},
@@ -139,13 +160,14 @@ async function transferPlayback(deviceIds: string[], play = false) {
 }
 
 async function getAvailableDevices() {
-	return spotifyGet(`${origin}${player.devices}`);
+	return spotifyGet({ endpoint: `${origin}${player.devices}` });
 }
 
 async function getCurrentlyPlayingTrack() {
-	return spotifyGet<CurrentlyPlayingTrack>(
-		`${origin}${player.currentlyPlaying}`,
-	);
+	return spotifyGet<CurrentlyPlayingTrack>({
+		endpoint: `${origin}${player.currentlyPlaying}`,
+		tag: [TAGS.get_currently_playing_track],
+	});
 }
 
 async function startOrResumePlayback() {
@@ -164,9 +186,22 @@ async function pausePlayback() {
 }
 
 async function skipToNext() {
-	return spotifyPost({
-		endpoint: `${origin}${player.next}`,
-	});
+	try {
+		const res = spotifyPost({
+			endpoint: `${origin}${player.next}`,
+			headers: {
+				"Content-length": "0",
+			},
+		});
+
+		revalidateTag(TAGS.get_currently_playing_track);
+		return res;
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.error(error.message);
+			console.log("Error in skipToNext");
+		}
+	}
 }
 
 async function skipToPrevious() {
@@ -212,13 +247,16 @@ async function toggleShuffle(state: boolean) {
 }
 
 async function getRecentlyPlayedTracks() {
-	return spotifyGet(`${origin}${player.recentlyPlayed}`, {
-		limit: MAX_ITEMS_IN_ROW,
+	return spotifyGet({
+		endpoint: `${origin}${player.recentlyPlayed}`,
+		params: {
+			limit: MAX_ITEMS_IN_ROW,
+		},
 	});
 }
 
 async function getUserQueue() {
-	return spotifyGet(`${origin}${player.queue}`);
+	return spotifyGet({ endpoint: `${origin}${player.queue}` });
 }
 
 async function addToQueue(uri: string) {
@@ -232,7 +270,7 @@ async function addToQueue(uri: string) {
 
 export {
 	addToQueue,
-	getAccessToken,
+	// getAccessToken,
 	getArtist,
 	getAvailableDevices,
 	getCategoryPlaylist,
@@ -240,7 +278,7 @@ export {
 	getPlaybackState,
 	getPlaylist,
 	getRecentlyPlayedTracks,
-	getRefreshToken,
+	// getRefreshToken,
 	getSearch,
 	getSeveralCategories,
 	getSingleCategory,

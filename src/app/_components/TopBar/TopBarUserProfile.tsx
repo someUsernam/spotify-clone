@@ -8,6 +8,10 @@ import { SlBell } from "react-icons/sl";
 async function TopBarUserProfile() {
 	const userProfile: UserProfiles = await getUserProfile();
 
+	if (userProfile.images === undefined) {
+		return null;
+	}
+
 	onError(userProfile);
 
 	const { images, display_name } = userProfile;

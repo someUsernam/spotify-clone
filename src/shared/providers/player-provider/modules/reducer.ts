@@ -5,10 +5,16 @@ export type State = {
 
 export type Action = {
 	type: string;
-	payload: any;
+	payload: TODO;
 };
 
 export function playerReducer(state: State, action: Action) {
+	if (action.type === "IS_PLAYING") {
+		return {
+			...state,
+			playing: action.payload,
+		};
+	}
 	if (action.type === "PLAY") {
 		return {
 			...state,
@@ -32,6 +38,7 @@ export function playerReducer(state: State, action: Action) {
 }
 
 export const initialState = {
+	isPlaying: false,
 	playing: false,
 	volume: 100,
 };
