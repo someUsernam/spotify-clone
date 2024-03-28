@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { ACCESS_TOKEN_KEY, endpoint } from "./constants";
+import { KEYS, endpoint } from "./constants";
 import { fetcher } from "./fetcher";
 
 const { origin } = endpoint.spotify;
@@ -69,7 +69,7 @@ function createGetFetcher<T>({
 	headers,
 }: CreateGetFetcherParams) {
 	const cookieStore = cookies();
-	const token = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
+	const token = cookieStore.get(KEYS.access_token)?.value;
 
 	if (!token) {
 		NextResponse.redirect(`${origin}/api/login`);
@@ -94,7 +94,7 @@ function createFetcher<T>({
 	headers,
 }: CreateFetcherParams) {
 	const cookieStore = cookies();
-	const token = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
+	const token = cookieStore.get(KEYS.access_token)?.value;
 
 	if (!token) {
 		NextResponse.redirect(`${origin}/api/login`);
