@@ -1,9 +1,14 @@
-import { getCurrentlyPlayingTrack } from "@/shared/services/spotify";
+import { getCurrentlyPlayingTrack } from "@/shared/services/player";
 import Image from "next/image";
 
 async function PlayerPreview() {
 	const currentTrack = await getCurrentlyPlayingTrack();
-	if (!currentTrack.item) return null;
+
+	// console.log({ currentTrack });
+
+	if (!currentTrack || "error" in currentTrack || !currentTrack.item) {
+		return null;
+	}
 
 	let smallestImage: Image | null = null;
 	let creatorName = "";

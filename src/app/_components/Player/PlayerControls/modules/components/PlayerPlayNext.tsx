@@ -1,16 +1,21 @@
 "use client";
 
 import { Button } from "@/shared/components/ui/Button";
-import { getPlaybackState, skipToNext } from "@/shared/services/spotify";
+import { skipToNext } from "@/shared/services/player";
+import { useRouter } from "next/navigation";
 import { BiSkipNext } from "react-icons/bi";
 import { ICON_SIZE } from "../utils/consts";
 
 function PlayerPlayNext() {
+	const router = useRouter();
+
 	const handlePlayNext = async () => {
-		const playbackState = await getPlaybackState();
-		if (!playbackState) return;
-		const a = await skipToNext(playbackState.device.id);
-		// await skipToNext(playbackState.device.id);
+		// console.log("handlePlayNext");
+		await skipToNext();
+
+		// console.log("router.refresh");
+		router.refresh();
+		// console.log("router.refreshed");
 	};
 
 	return (

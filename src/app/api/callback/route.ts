@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/shared/services/spotify";
+import { getAccessToken } from "@/shared/services/auth";
 import {
 	ACCESS_TOKEN_KEY,
 	CODE_KEY,
@@ -32,6 +32,14 @@ export async function GET(req: Request) {
 	cookieStore.delete(STATE_KEY);
 
 	const result = await getAccessToken(code);
+
+	if (!result || "error" in result) {
+		return NextResponse.redirect(
+			`${DEV_URL}?${querystring.stringify({
+				error: "access_token_error",
+			})}`,
+		);
+	}
 
 	cookieStore.set(ACCESS_TOKEN_KEY, result.access_token);
 	cookieStore.set(REFRESH_TOKEN_KEY, result.refresh_token);

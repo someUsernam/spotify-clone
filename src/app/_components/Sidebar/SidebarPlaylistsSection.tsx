@@ -7,12 +7,15 @@ import { CreateSidebarPromptSection } from "./CreatePlaylistPromptSection";
 
 async function SidebarPlaylistsSection() {
 	const userProfile: UserProfile = await getUserProfile();
-	const userPlaylists: UserPlaylists = (await getUserPlaylists(
-		userProfile.id,
-	)) as UserPlaylists;
 
-	if (!userPlaylists) {
-		throw new Error("User playlists not found");
+	if (!userProfile) {
+		return null;
+	}
+
+	const userPlaylists: UserPlaylists = await getUserPlaylists(userProfile.id);
+
+	if (!userPlaylists.items) {
+		return null;
 	}
 
 	return (

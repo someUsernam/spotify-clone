@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { endpoint } from "./shared/utils/constants";
 
 const SECOND = 1000;
 const EXPIRES_IN_KEY = "expires_in";

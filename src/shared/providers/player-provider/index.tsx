@@ -1,9 +1,22 @@
 "use client";
 
-import { Reducer, createContext, useContext, useMemo, useReducer } from "react";
+import {
+	getPlaybackState,
+	pausePlayback,
+	startOrResumePlayback,
+} from "@/shared/services/spotify";
+import {
+	Reducer,
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useReducer,
+} from "react";
 import { Action, State, initialState, playerReducer } from "./modules/reducer";
 
 const PlayerContext = createContext({
+	isPlaying: false,
 	play: () => {},
 	pause: () => {},
 	// playNext: () => {},
@@ -27,13 +40,22 @@ function PlayerProvider({ children }: ChildrenProps) {
 		initialState,
 	);
 
+	useEffect(() => {
+		getPlaybackState().then((data) => {
+			dispatch({ type: "IS_PLAYING", payload: data.is_playing });
+		});
+	}, []);
+
 	const values = useMemo(() => {
 		return {
+			isPlaying: state.playing,
 			play: () => {
-				dispatch({ type: "PLAY", payload: null });
+				dispatch({ type: "IS_PLAYING", payload: true });
+				startOrResumePlayback();
 			},
 			pause: () => {
-				dispatch({ type: "PAUSE", payload: null });
+				dispatch({ type: "IS_PLAYING", payload: false });
+				pausePlayback();
 			},
 			// playNext: () => {},
 			// playPrevious: () => {},
@@ -52,7 +74,11 @@ function PlayerProvider({ children }: ChildrenProps) {
 			// setElapsed: () => {},
 			// setPlayer: () => {},
 		};
-	}, []);
+	}, [
+		// dispatch,
+		state.playing,
+		// state.volume,
+	]);
 
 	return (
 		<PlayerContext.Provider value={values}>{children}</PlayerContext.Provider>

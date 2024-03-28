@@ -1,11 +1,33 @@
-import querystring from "querystring";
 import { setSearchParams } from "./setSearchParams";
+
+type FetcherGetParams = {
+	readonly endpoint: string;
+	readonly options?: Record<
+		PropertyKey,
+		| string
+		| string[]
+		| number
+		| boolean
+		| undefined
+		| null
+		| Record<string, [string] | undefined>
+	>;
+	readonly headers?: Record<string, string>;
+	readonly params?: Record<string, string | number | boolean>;
+};
 
 type FetcherParams = {
 	readonly endpoint: string;
-	readonly options?: Record<
-		string,
-		string | string[] | number | boolean | undefined | null
+	readonly body?: Record<
+		PropertyKey,
+		| string
+		| undefined
+		| number
+		| boolean
+		| readonly string[]
+		| readonly number[]
+		| readonly boolean[]
+		| null
 	>;
 	readonly headers?: Record<string, string>;
 	readonly params?: Record<string, string | number | boolean>;
@@ -17,28 +39,35 @@ const fetcher = (() => {
 		headers = {},
 		params = {},
 		options = {},
-	}: FetcherParams): Promise<T> {
+	}: FetcherGetParams): Promise<T> {
 		const url = new URL(endpoint);
 
 		setSearchParams(url, params);
 
-		const response = await fetch(url, {
-			headers,
-			...options,
-		});
+		try {
+			const response = await fetch(url, {
+				headers,
+				...options,
+			});
 
-		if (!response.ok) {
-			return response as unknown as T;
+			if (!response.ok) {
+				return response as unknown as T;
+			}
+
+			const data: T = await response.json();
+
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error.message, error.name);
+				console.log("Error in get");
+			}
 		}
-
-		const data: T = await response.json();
-
-		return data;
 	}
 
 	async function post<T>({
 		endpoint,
-		options = {},
+		body = {},
 		headers = {},
 		params = {},
 	}: FetcherParams): Promise<T> {
@@ -46,64 +75,84 @@ const fetcher = (() => {
 
 		setSearchParams(url, params);
 
-		const response = await fetch(url, {
-			method: "POST",
-			headers,
-			body: querystring.stringify(options),
-		});
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers,
+				body: JSON.stringify(body),
+			});
 
-		if (!response.ok) {
-			return response as unknown as T;
+			if (!response.ok) {
+				return response as unknown as T;
+			}
+
+			const data: T = await response.json();
+
+			return data;
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				console.error(error.message, error.name);
+				console.log("Error in post");
+			}
 		}
-
-		const data: T = await response.json();
-
-		return data;
 	}
 
 	async function put<T>({
 		endpoint,
-		options = {},
+		body = {},
 		headers = {},
 		params = {},
 	}: FetcherParams): Promise<T> {
 		const url = new URL(endpoint);
 
 		setSearchParams(url, params);
+		try {
+			const response = await fetch(url, {
+				method: "PUT",
+				headers,
+				body: JSON.stringify(body),
+			});
 
-		const response = await fetch(url, {
-			method: "PUT",
-			headers,
-			body: querystring.stringify(options),
-		});
+			if (!response.ok) {
+				return response as unknown as T;
+			}
 
-		if (!response.ok) {
-			return response as unknown as T;
+			const data: T = await response.json();
+
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error.message, error.name);
+				console.log("Error in put");
+			}
 		}
-
-		const data: T = await response.json();
-
-		return data;
 	}
 
 	async function del<T>({
 		endpoint,
-		options = {},
+		body = {},
 		headers = {},
 	}: FetcherParams): Promise<T> {
-		const response = await fetch(endpoint, {
-			method: "DELETE",
-			headers,
-			body: querystring.stringify(options),
-		});
+		try {
+			const response = await fetch(endpoint, {
+				method: "DELETE",
+				headers,
+				body: JSON.stringify(body),
+			});
 
-		if (!response.ok) {
-			return response as unknown as T;
+			if (!response.ok) {
+				return response as unknown as T;
+			}
+
+			const data: T = await response.json();
+
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error.message, error.name);
+				console.log("Error in delete");
+			}
 		}
-
-		const data: T = await response.json();
-
-		return data;
 	}
 
 	return {
