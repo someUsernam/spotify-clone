@@ -17,4 +17,4 @@ function SidebarLoading() {
 		</div>
 	);
 }
-export default SidebarLoading;
+export { SidebarLoading };
