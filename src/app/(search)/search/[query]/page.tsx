@@ -19,7 +19,7 @@ export async function generateMetadata({
 }
 
 async function Page({ params: { query } }: QueryProps) {
-	const searchResults: SearchType = await getSearch({ query });
+	const searchResults = await getSearch({ query });
 
 	onError(searchResults);
 

@@ -6,7 +6,7 @@ import TopBarLoginButtons from "./TopBarLoginButtons";
 import { SlBell } from "react-icons/sl";
 
 async function TopBarUserProfile() {
-	const userProfile: UserProfiles = await getUserProfile();
+	const userProfile = await getUserProfile();
 
 	if (userProfile.images === undefined) {
 		return null;

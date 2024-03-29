@@ -10,7 +10,7 @@ type SearchProps = {
 };
 
 async function page({ searchParams: { q: query } }: SearchProps) {
-	const categoriesData: SeveralCategories = await getSeveralCategories();
+	const categoriesData = await getSeveralCategories();
 
 	const { categories } = categoriesData;
 	console.log(query);
