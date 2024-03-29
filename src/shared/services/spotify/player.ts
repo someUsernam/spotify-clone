@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { KEYS, TAGS, endpoint } from "../utils/constants";
+import { KEYS, TAGS, endpoint } from "../../utils/constants";
 
 const { origin, player } = endpoint.spotify;
 

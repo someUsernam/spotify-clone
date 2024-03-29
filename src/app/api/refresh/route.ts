@@ -1,4 +1,4 @@
-import { getRefreshToken } from "@/shared/services/auth";
+import { getRefreshToken } from "@/shared/services/spotify";
 import { KEYS, LINKS } from "@utils/constants";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";

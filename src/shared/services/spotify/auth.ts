@@ -1,7 +1,7 @@
 "use server";
 
 import { stringify } from "querystring";
-import { REDIRECT_URI, basic, endpoint } from "../utils/constants";
+import { REDIRECT_URI, basic, endpoint } from "../../utils/constants";
 
 const { tokenEndpoint } = endpoint.spotify;
 

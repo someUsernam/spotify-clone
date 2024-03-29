@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/components/ui/Button";
-import { skipToNext } from "@/shared/services/player";
-import { revalidatePath } from "next/cache";
+import { skipToNext } from "@/shared/services/spotify";
 import { useRouter } from "next/navigation";
 import { BiSkipNext } from "react-icons/bi";
 import { ICON_SIZE } from "../utils/consts";
