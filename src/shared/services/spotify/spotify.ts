@@ -2,7 +2,11 @@
 
 import { TAGS, endpoint } from "@utils/constants";
 import { revalidateTag } from "next/cache";
-import { spotifyGet, spotifyPost, spotifyPut } from "../utils/spotifyFetcher";
+import {
+	spotifyGet,
+	spotifyPost,
+	spotifyPut,
+} from "../../utils/spotifyFetcher";
 
 const MAX_ITEMS_IN_ROW = "8";
 const MAX_ITEMS_IN_COLUMN = "10";

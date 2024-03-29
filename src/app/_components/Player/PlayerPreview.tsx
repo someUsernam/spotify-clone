@@ -1,4 +1,4 @@
-import { getCurrentlyPlayingTrack } from "@/shared/services/player";
+import { getCurrentlyPlayingTrack } from "@/shared/services/spotify";
 import Image from "next/image";
 
 async function PlayerPreview() {
