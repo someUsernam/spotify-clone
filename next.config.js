@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	logging: {
-		level: "debug",
+		fullUrl: true,
 	},
 	images: {
 		remotePatterns: [
