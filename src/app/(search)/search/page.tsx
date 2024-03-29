@@ -1,4 +1,5 @@
 import { getSeveralCategories } from "@/shared/services/spotify";
+import { onError } from "@/shared/utils/onError";
 import { Section } from "@blocks/Section";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +13,9 @@ type SearchProps = {
 async function page({ searchParams: { q: query } }: SearchProps) {
 	const categoriesData = await getSeveralCategories();
 
+	onError(categoriesData);
+
 	const { categories } = categoriesData;
-	console.log(query);
 
 	return (
 		<Section title="Browse all" variant="block">

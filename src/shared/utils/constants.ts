@@ -74,7 +74,8 @@ const LINKS = {
 		id: (id: string) => `/track/${id}`,
 	},
 	search: {
-		id: (id: string) => `/search/${id}`,
+		home: "/search",
+		query: (query: string | string[]) => `/search/${query}`,
 		albums: "/search/albums",
 		artists: "/search/artists",
 		genres: "/search/genres",

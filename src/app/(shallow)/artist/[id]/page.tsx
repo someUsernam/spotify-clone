@@ -1,4 +1,5 @@
 import PlaylistPlayer from "@/shared/components/ui/Playlist/PlaylistPlayer";
+import { onError } from "@/shared/utils/onError";
 import { Header } from "@blocks/Header";
 import { Section } from "@blocks/Section";
 import { getArtist } from "@shared/services/spotify";
@@ -13,9 +14,7 @@ type ArtistProps = {
 async function Page({ params: { id } }: ArtistProps) {
 	const artist = await getArtist(id);
 
-	if (!artist) {
-		throw new Error("Artist not found");
-	}
+	onError(artist);
 
 	const isVerified = artist.followers.total > 250 ? true : false;
 

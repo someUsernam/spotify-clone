@@ -1,7 +1,7 @@
 import { SIdebarUserPlaylistItem } from "./SIdebarUserPlaylistItem";
 
 type SideabrUserPlaylistsProps = {
-	userPlaylists: UserPlaylists;
+	userPlaylists: PagingObject<SimplifiedPlaylist>;
 };
 
 function SidebarUserPlaylists({ userPlaylists }: SideabrUserPlaylistsProps) {

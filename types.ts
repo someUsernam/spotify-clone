@@ -490,12 +490,12 @@ type SnapshotId = {
 
 type FeaturedPlaylists = {
 	message: string;
-	playlists: PagingObject<SimplifiedPlaylist[]>;
+	playlists: PagingObject<SimplifiedPlaylist>;
 };
 
 type CategoryPlaylist = {
 	massage: string;
-	playlists: PagingObject<SimplifiedPlaylist[]>;
+	playlists: PagingObject<SimplifiedPlaylist>;
 };
 
 type GetPlaylist = Errorable<Playlist>;
@@ -504,7 +504,7 @@ type UpdatePlaylistItems = Errorable<SnapshotId>;
 type AddItemsToPlaylist = Errorable<SnapshotId>;
 type RemoveItemsFromPlaylist = Errorable<SnapshotId>;
 type GetCurrentUserPlaylists = Errorable<PagingObject<SimplifiedPlaylist[]>>;
-type GetUserPlaylists = Errorable<PagingObject<SimplifiedPlaylist[]>>;
+type GetUserPlaylists = Errorable<PagingObject<SimplifiedPlaylist>>;
 type CreatePlaylist = Errorable<Playlist>;
 type GetFeaturedPlaylists = Errorable<FeaturedPlaylists>;
 type GetCategoryPlaylists = Errorable<CategoryPlaylist>;
@@ -513,13 +513,13 @@ type GetPlaylistCoverImage = Errorable<Image[]>;
 // Search
 
 type Search = {
-	tracks: PagingObject<Track[]>;
-	artists: PagingObject<Artist[]>;
-	albums: PagingObject<SimplifiedAlbum[]>;
-	playlists: PagingObject<SimplifiedPlaylist[]>;
-	shows: PagingObject<SimplifiedShow[]>;
-	episodes: PagingObject<SimplifiedEpisode[]>;
-	audiobooks: PagingObject<SimplifiedAudiobook[]>;
+	tracks: PagingObject<Track>;
+	artists: PagingObject<Artist>;
+	albums: PagingObject<SimplifiedAlbum>;
+	playlists: PagingObject<SimplifiedPlaylist>;
+	shows: PagingObject<SimplifiedShow>;
+	episodes: PagingObject<SimplifiedEpisode>;
+	audiobooks: PagingObject<SimplifiedAudiobook>;
 };
 
 type SearchForItem = Errorable<Search>;
@@ -592,7 +592,7 @@ type SavedTrack = {
 
 type GetTrack = Errorable<Track>;
 type GetSeveralTracks = Errorable<{ tracks: Track[] }>;
-type GetUserSavedTracks = Errorable<PagingObject<SavedTrack[]>>;
+type GetUserSavedTracks = Errorable<PagingObject<SavedTrack>>;
 type CheckUserSavedTracks = Errorable<boolean[]>;
 type GetSeveralTracksAudioFeatures = Errorable<{
 	audio_features: AudioFeatures[];

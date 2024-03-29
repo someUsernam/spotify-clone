@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type SidebarUserPlaylistsProps = {
-	playlist: UserPlaylist;
+	playlist: SimplifiedPlaylist;
 };
 
 function SIdebarUserPlaylistItem({ playlist }: SidebarUserPlaylistsProps) {
