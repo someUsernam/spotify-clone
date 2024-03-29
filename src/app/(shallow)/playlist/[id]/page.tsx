@@ -12,7 +12,7 @@ type PlaylistParams = {
 };
 
 async function Page({ params: { id } }: PlaylistParams) {
-	const playlist: Playlists = (await getPlaylist(id)) as Playlists;
+	const playlist = await getPlaylist(id);
 
 	onError(playlist);
 

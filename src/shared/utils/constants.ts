@@ -17,6 +17,8 @@ const SCOPES = [
 	"user-read-currently-playing",
 	"user-modify-playback-state",
 	"user-read-recently-played",
+	"user-read-playback-position",
+	"user-read-private",
 ].join(" ");
 
 const KEYS = {

@@ -87,13 +87,13 @@ async function getUserSavedTracks() {
 }
 
 async function getUserPlaylists(userId: string) {
-	return spotifyGet<UserPlaylists>({
+	return spotifyGet<GetUserPlaylists>({
 		endpoint: `${origin}${playlists.userPlaylists(userId)}`,
 	});
 }
 
 async function getPlaylist(playlistId: string) {
-	return spotifyGet<Playlists>({
+	return spotifyGet<GetPlaylist>({
 		endpoint: `${origin}${playlists.single(playlistId)}`,
 	});
 }
@@ -104,7 +104,7 @@ async function getSearch({
 	limit = MAX_ITEMS_IN_COLUMN,
 	offset = INITIAL_OFFSET,
 }: { query: string; type?: string; limit?: string; offset?: string }) {
-	return spotifyGet<SearchType>({
+	return spotifyGet<SearchForItem>({
 		endpoint: `${origin}${search.search}`,
 		params: {
 			q: query,
@@ -116,7 +116,7 @@ async function getSearch({
 }
 
 async function getSeveralCategories() {
-	return spotifyGet<SeveralCategories>({
+	return spotifyGet<GetSeveralBrowseCategories>({
 		endpoint: `${origin}${categories.several}`,
 		params: {
 			limit: MAX_ITEMS_IN_PAGE,
@@ -125,25 +125,25 @@ async function getSeveralCategories() {
 }
 
 async function getSingleCategory(categoryId: string) {
-	return spotifyGet<SingleCategory>({
+	return spotifyGet<GetSingleBrowseCategory>({
 		endpoint: `${origin}${categories.single(categoryId)}`,
 	});
 }
 
 async function getCategoryPlaylist(categoryId: string) {
-	return spotifyGet<CategoriesPlaylists>({
+	return spotifyGet<GetCategoryPlaylists>({
 		endpoint: `${origin}${playlists.categories(categoryId)}`,
 	});
 }
 
 async function getArtist(artistId: string) {
-	return spotifyGet<Artist>({
+	return spotifyGet<GetArtist>({
 		endpoint: `${origin}${artists.single(artistId)}`,
 	});
 }
 
 async function getPlaybackState() {
-	return spotifyGet<PlaybackState>({ endpoint: `${origin}${player.state}` });
+	return spotifyGet<GetPlaybackState>({ endpoint: `${origin}${player.state}` });
 }
 
 async function transferPlayback(deviceIds: string[], play = false) {
@@ -164,7 +164,7 @@ async function getAvailableDevices() {
 }
 
 async function getCurrentlyPlayingTrack() {
-	return spotifyGet<CurrentlyPlayingTrack>({
+	return spotifyGet<GetCurrentlyPlayingTrack>({
 		endpoint: `${origin}${player.currentlyPlaying}`,
 		tag: [TAGS.get_currently_playing_track],
 	});
@@ -247,7 +247,7 @@ async function toggleShuffle(state: boolean) {
 }
 
 async function getRecentlyPlayedTracks() {
-	return spotifyGet({
+	return spotifyGet<GetRecentlyPlayedTracks>({
 		endpoint: `${origin}${player.recentlyPlayed}`,
 		params: {
 			limit: MAX_ITEMS_IN_ROW,
@@ -256,7 +256,7 @@ async function getRecentlyPlayedTracks() {
 }
 
 async function getUserQueue() {
-	return spotifyGet({ endpoint: `${origin}${player.queue}` });
+	return spotifyGet<GetUserQueue>({ endpoint: `${origin}${player.queue}` });
 }
 
 async function addToQueue(uri: string) {
