@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { KEYS, TAGS, endpoint } from "../utils/constants";
 
@@ -11,7 +11,6 @@ async function skipToNext() {
 	const access_token = cookieStore.get(KEYS.access_token)?.value;
 
 	try {
-		console.log("post skip to next");
 		await fetch(`${origin}${player.next}`, {
 			method: "POST",
 			headers: {
@@ -19,16 +18,27 @@ async function skipToNext() {
 			},
 		});
 
-		// console.log("revalidateTag(TAGS.get_currently_playing_track)");
+		revalidateTag(TAGS.get_currently_playing_track);
+	} catch (error: unknown) {
+		console.error((error as Error).message);
+	}
+}
+
+async function skipToPrevious() {
+	const cookieStore = cookies();
+	const access_token = cookieStore.get(KEYS.access_token)?.value;
+
+	try {
+		await fetch(`${origin}${player.previous}`, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
+		});
 
 		revalidateTag(TAGS.get_currently_playing_track);
-		revalidatePath("/");
-		console.log("revalidated (TAGS.get_currently_playing_track)");
 	} catch (error: unknown) {
-		if (error instanceof Error) {
-			console.error(error.message, error.cause);
-			console.log("Error in skipToNext");
-		}
+		console.error((error as Error).message);
 	}
 }
 
@@ -39,12 +49,10 @@ async function getCurrentlyPlayingTrack(): Promise<
 	const access_token = cookieStore.get(KEYS.access_token)?.value;
 
 	try {
-		console.log("fetch currently playing track");
 		const res = await fetch(`${origin}${player.currentlyPlaying}`, {
 			headers: {
 				Authorization: `Bearer ${access_token}`,
 			},
-			cache: "no-store",
 			next: {
 				tags: [TAGS.get_currently_playing_track],
 			},
@@ -52,26 +60,19 @@ async function getCurrentlyPlayingTrack(): Promise<
 
 		const data: GetCurrentlyPlayingTrack = await res.json();
 
-		if (!("error" in data)) {
-			console.log("fetched currently playing track", {
-				name: data?.item?.name,
-				headers: res.headers,
-			});
-		}
+		// if (!("error" in data)) {
+		// 	console.log("fetched currently playing track", {
+		// 		name: data?.item?.name,
+		// 		headers: res.headers,
+		// 	});
+		// }
 
 		return data;
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			console.error(error.message, error.cause);
-			console.log("Error in getCurrentlyPlayingTrack");
 		}
 	}
 }
-// async function getCurrentlyPlayingTrack() {
-// 	return spotifyGet<CurrentlyPlayingTrack>({
-// 		endpoint: `${origin}${player.currentlyPlaying}`,
-// 		tag: [TAGS.currently_playing_track],
-// 	});
-// }
 
-export { getCurrentlyPlayingTrack, skipToNext };
+export { getCurrentlyPlayingTrack, skipToNext, skipToPrevious };
