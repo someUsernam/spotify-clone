@@ -1,6 +1,10 @@
 import { Card } from ".";
 
-function CardAlbum({ item }: { item: Album }) {
+type CardAlbumProps = {
+	item: SimplifiedAlbum;
+};
+
+function CardAlbum({ item }: CardAlbumProps) {
 	return (
 		<Card href={`/album/${item.id}`}>
 			<Card.Img src={item.images[0].url} alt={`${item.name} ${item.type}`} />

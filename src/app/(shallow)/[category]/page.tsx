@@ -2,6 +2,7 @@ import {
 	getCategoryPlaylist,
 	getSingleCategory,
 } from "@/shared/services/spotify";
+import { onError } from "@/shared/utils/onError";
 import { Section } from "@blocks/Section";
 import { Card } from "@ui/Card";
 
@@ -17,12 +18,8 @@ async function Page({ params: { category: categoryId } }: CategoryProps) {
 		getCategoryPlaylist(categoryId),
 	]);
 
-	if (category?.error) {
-		// throw new Error(category.error.message);
-		console.log(category.error.message);
-	}
-
-	console.log(category, categoryPlaylist);
+	onError(category);
+	onError(categoryPlaylist);
 
 	return (
 		<>

@@ -7,7 +7,11 @@ function formatReleaseDate(releaseDate: string) {
 
 const ONE_HOUR = 3600000;
 
-function CardEpisode({ item }: { item: Episode }) {
+type CardEpisodeProps = {
+	item: SimplifiedEpisode;
+};
+
+function CardEpisode({ item }: CardEpisodeProps) {
 	const [minutes] = HoursMinutesSeconds(item.duration_ms);
 
 	return (

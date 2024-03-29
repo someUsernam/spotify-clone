@@ -33,7 +33,7 @@ async function skipToNext() {
 }
 
 async function getCurrentlyPlayingTrack(): Promise<
-	CurrentlyPlayingTrack | undefined
+	GetCurrentlyPlayingTrack | undefined
 > {
 	const cookieStore = cookies();
 	const access_token = cookieStore.get(KEYS.access_token)?.value;
@@ -50,7 +50,7 @@ async function getCurrentlyPlayingTrack(): Promise<
 			},
 		});
 
-		const data: CurrentlyPlayingTrack = await res.json();
+		const data: GetCurrentlyPlayingTrack = await res.json();
 
 		if (!("error" in data)) {
 			console.log("fetched currently playing track", {

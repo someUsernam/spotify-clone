@@ -52,13 +52,13 @@ const {
 // }
 
 async function getUserProfile() {
-	return spotifyGet<UserProfile>({
+	return spotifyGet<GetUserProfile>({
 		endpoint: `${origin}${users.currentProfile}`,
 	});
 }
 
 async function getTopTracks() {
-	return spotifyGet<TopTracks>({
+	return spotifyGet<GetUserTopItems>({
 		endpoint: `${origin}${users.topItems("tracks")}`,
 		params: {
 			time_range: "short_term",
@@ -68,7 +68,7 @@ async function getTopTracks() {
 }
 
 async function getTopArtists() {
-	return spotifyGet<TopArtists>({
+	return spotifyGet<GetUserTopItems>({
 		endpoint: `${origin}${users.topItems("artists")}`,
 		params: {
 			time_range: "short_term",
@@ -78,7 +78,7 @@ async function getTopArtists() {
 }
 
 async function getUserSavedTracks() {
-	return spotifyGet<UserSavedTracks>({
+	return spotifyGet<GetUserSavedTracks>({
 		endpoint: `${origin}${tracks.saved}`,
 		params: {
 			limit: MAX_ITEMS_IN_ROW,
