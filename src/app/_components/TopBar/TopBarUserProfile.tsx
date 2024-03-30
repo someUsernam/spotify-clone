@@ -1,11 +1,11 @@
-import { getUserProfile } from "@/shared/services/spotify";
+import { getCurrentUserProfile } from "@/shared/services/spotify";
 import TopBarLoginButtons from "./TopBarLoginButtons";
 
 import { hasError } from "@/shared/utils/hasError";
 import NotificationAndAvatarButtons from "./NotificationAndAvatarButtons";
 
 async function TopBarUserProfile() {
-	const userProfile = await getUserProfile();
+	const userProfile = await getCurrentUserProfile();
 
 	if (hasError(userProfile)) {
 		return <TopBarLoginButtons />;

@@ -3,6 +3,12 @@ const REDIRECT_URI = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const basic = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+
+const MAX_ITEMS_IN_ROW = "8";
+const MAX_ITEMS_IN_COLUMN = "10";
+const MAX_ITEMS_IN_PAGE = "30";
+const INITIAL_OFFSET = "0";
+
 const SCOPES = [
 	"user-read-private",
 	"user-read-email",
@@ -218,8 +224,12 @@ export {
 	CLIENT_ID,
 	CLIENT_SECRET,
 	DEV_URL,
+	INITIAL_OFFSET,
 	KEYS,
 	LINKS,
+	MAX_ITEMS_IN_COLUMN,
+	MAX_ITEMS_IN_PAGE,
+	MAX_ITEMS_IN_ROW,
 	REDIRECT_URI,
 	SCOPES,
 	TAGS,

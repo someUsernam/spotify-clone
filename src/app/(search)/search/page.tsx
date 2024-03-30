@@ -1,4 +1,4 @@
-import { getSeveralCategories } from "@/shared/services/spotify";
+import { getSeveralBrowseCategories } from "@/shared/services/spotify";
 import { onError } from "@/shared/utils/onError";
 import { Section } from "@blocks/Section";
 import Image from "next/image";
@@ -11,7 +11,7 @@ type SearchProps = {
 };
 
 async function page({ searchParams: { q: query } }: SearchProps) {
-	const categoriesData = await getSeveralCategories();
+	const categoriesData = await getSeveralBrowseCategories();
 
 	onError(categoriesData);
 

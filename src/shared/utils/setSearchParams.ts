@@ -6,9 +6,9 @@ export function setSearchParams(
 		return;
 	}
 
-	for (const [key, value] of Object.entries(params)) {
-		if (value !== undefined) {
-			url.searchParams.set(key, String(value));
+	for (const key in params) {
+		if (params[key] !== undefined) {
+			url.searchParams.set(key, String(params[key]));
 		}
 	}
 }

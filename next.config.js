@@ -67,7 +67,6 @@ const nextConfig = {
 			{
 				protocol: "https",
 				hostname: "lineup-images.scdn.co",
-				pathname: "/**/*",
 			},
 		],
 	},

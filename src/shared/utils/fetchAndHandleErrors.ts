@@ -1,4 +1,8 @@
-import { stringify } from "querystring";
+import { setSearchParams } from "./setSearchParams";
+
+type ExtendedRequestInit = RequestInit & {
+	params?: Record<string, string | number | boolean>;
+};
 
 class ResponseError extends Error {
 	response: Response;
@@ -10,21 +14,30 @@ class ResponseError extends Error {
 }
 
 export async function fetchAndHandleErrors<T>(
-	...options: Parameters<typeof fetch>
+	...options: [
+		input: string | URL | Request,
+		init?: ExtendedRequestInit | undefined,
+	]
 ): Promise<T | ErrorType> {
 	try {
-		console.log(options, "options");
+		let [url, init] = options;
 
-		const init = options[1];
-		const headers = init?.headers;
+		if (init) {
+			if (init.params) {
+				url = new URL(url as string);
+				setSearchParams(url, init.params);
+				options[0] = url;
+			}
 
-		if (headers && "Content-type" in headers) {
-			if (headers["Content-type"] === "application/json") {
-				init.body = JSON.stringify(init.body);
-			}
-			if (headers["Content-type"] === "application/x-www-form-urlencoded") {
-				init.body = stringify(init.body);
-			}
+			// if (init?.headers && "Content-type" in init.headers) {
+			// 	if (init.headers["Content-type"] === "application/json") {
+			// 		init.body = JSON.stringify(init.body);
+			// 		options[1] = init;
+			// 	}
+			// if (headers["Content-type"] === "application/x-www-form-urlencoded") {
+			// 	init.body = stringify(init.body);
+			// }
+			// }
 		}
 
 		const res = await fetch(...options);
@@ -33,10 +46,12 @@ export async function fetchAndHandleErrors<T>(
 			throw new ResponseError(res);
 		}
 
-		console.log(res);
-
 		const contentType = res.headers.get("Content-Type");
-		if (contentType?.includes("application/json")) {
+		if (
+			contentType?.includes(
+				"application/json" || "application/x-www-form-urlencoded",
+			)
+		) {
 			return res.json() as Promise<T>;
 		}
 		if (contentType?.includes("text/html")) {

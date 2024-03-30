@@ -1,31 +1,38 @@
+import { getArtist } from "./artists";
 import { getAccessToken, getRefreshToken } from "./auth";
-import { skipToNext, skipToPrevious } from "./player";
+import {
+	getSeveralBrowseCategories,
+	getSingleBrowseCategory,
+} from "./categories";
 import {
 	addToQueue,
-	getArtist,
 	getAvailableDevices,
-	getCategoryPlaylist,
 	getCurrentlyPlayingTrack,
 	getPlaybackState,
-	getPlaylist,
 	getRecentlyPlayedTracks,
-	getSearch,
-	getSeveralCategories,
-	getSingleCategory,
-	getTopArtists,
-	getTopTracks,
-	getUserPlaylists,
-	getUserProfile,
 	getUserQueue,
-	getUserSavedTracks,
 	pausePlayback,
 	seekToPosition,
 	setRepeatMode,
 	setVolume,
+	skipToNext,
+	skipToPrevious,
 	startOrResumePlayback,
 	toggleShuffle,
 	transferPlayback,
-} from "./spotify";
+} from "./player";
+import {
+	getCategoryPlaylist,
+	getPlaylist,
+	getUserPlaylists,
+} from "./playlists";
+import { getSearch } from "./search";
+import { getUserSavedTracks } from "./tracks";
+import {
+	getCurrentUserProfile,
+	getUserTopItemsArtists,
+	getUserTopItemsTracks,
+} from "./usets";
 
 export {
 	addToQueue,
@@ -33,20 +40,20 @@ export {
 	getArtist,
 	getAvailableDevices,
 	getCategoryPlaylist,
+	getCurrentUserProfile,
 	getCurrentlyPlayingTrack,
 	getPlaybackState,
 	getPlaylist,
 	getRecentlyPlayedTracks,
 	getRefreshToken,
 	getSearch,
-	getSeveralCategories,
-	getSingleCategory,
-	getTopArtists,
-	getTopTracks,
+	getSeveralBrowseCategories,
+	getSingleBrowseCategory,
 	getUserPlaylists,
-	getUserProfile,
 	getUserQueue,
 	getUserSavedTracks,
+	getUserTopItemsArtists,
+	getUserTopItemsTracks,
 	pausePlayback,
 	seekToPosition,
 	setRepeatMode,
