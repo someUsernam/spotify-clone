@@ -1,4 +1,7 @@
-import { getUserPlaylists, getUserProfile } from "@/shared/services/spotify";
+import {
+	getCurrentUserProfile,
+	getUserPlaylists,
+} from "@/shared/services/spotify";
 
 import { hasError } from "@/shared/utils/hasError";
 import { onError } from "@/shared/utils/onError";
@@ -6,7 +9,7 @@ import { SidebarPromptsAndPreferences } from "./modules/components/SidebarPrompt
 import { SidebarUserPlaylists } from "./modules/components/SidebarUserPlaylists";
 
 async function SidebarPlaylistsSection() {
-	const userProfile = await getUserProfile();
+	const userProfile = await getCurrentUserProfile();
 
 	onError(userProfile, "User profile not found");
 

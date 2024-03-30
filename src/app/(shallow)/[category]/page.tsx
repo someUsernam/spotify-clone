@@ -1,6 +1,6 @@
 import {
 	getCategoryPlaylist,
-	getSingleCategory,
+	getSingleBrowseCategory,
 } from "@/shared/services/spotify";
 import { onError } from "@/shared/utils/onError";
 import { Section } from "@blocks/Section";
@@ -14,7 +14,7 @@ type CategoryProps = {
 
 async function Page({ params: { category: categoryId } }: CategoryProps) {
 	const [category, categoryPlaylist] = await Promise.all([
-		getSingleCategory(categoryId),
+		getSingleBrowseCategory(categoryId),
 		getCategoryPlaylist(categoryId),
 	]);
 

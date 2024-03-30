@@ -1,6 +1,6 @@
 import {
-	getTopArtists,
-	getTopTracks,
+	getUserTopItemsArtists,
+	getUserTopItemsTracks,
 	getUserSavedTracks,
 } from "@/shared/services/spotify";
 import { LINKS } from "@/shared/utils/constants";
@@ -22,8 +22,8 @@ const greeting = getGreeting();
 
 export default async function Home() {
 	const [topTracks, topArtists, userSavedTracks] = await Promise.all([
-		getTopTracks(),
-		getTopArtists(),
+		getUserTopItemsTracks(),
+		getUserTopItemsArtists(),
 		getUserSavedTracks(),
 	]);
 

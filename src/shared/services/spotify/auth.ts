@@ -1,5 +1,6 @@
 "use server";
 
+import { fetchAndHandleErrors } from "@/shared/utils/fetchAndHandleErrors";
 import { stringify } from "querystring";
 import { REDIRECT_URI, basic, endpoint } from "../../utils/constants";
 
@@ -15,40 +16,23 @@ async function getAccessToken(code: string | null): Promise<Token | ErrorType> {
 		};
 	}
 
-	try {
-		const response = await fetch(tokenEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-				Authorization: `Basic ${basic}`,
-			},
-			body: stringify({
-				grant_type: "authorization_code",
-				redirect_uri: REDIRECT_URI,
-				code: code,
-			}),
-		});
-
-		if (!response.ok) {
-			return response as unknown as ErrorType;
-		}
-
-		const data: Token = await response.json();
-
-		return data;
-	} catch (error: unknown) {
-		return {
-			error: {
-				message: (error as Error).message,
-				status: 500,
-			},
-		};
-	}
+	return await fetchAndHandleErrors<Token>(tokenEndpoint, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+			Authorization: `Basic ${basic}`,
+		},
+		body: stringify({
+			grant_type: "authorization_code",
+			redirect_uri: REDIRECT_URI,
+			code: code,
+		}),
+	});
 }
 
 async function getRefreshToken(
 	refreshToken: string | undefined,
-): Promise<Token | ErrorType | undefined> {
+): Promise<Token | ErrorType> {
 	if (refreshToken === undefined) {
 		return {
 			error: {
@@ -58,36 +42,17 @@ async function getRefreshToken(
 		};
 	}
 
-	try {
-		const response = await fetch(tokenEndpoint, {
-			method: "POST",
-			headers: {
-				Authorization: `Basic ${basic}`,
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-			body: stringify({
-				grant_type: "refresh_token",
-				refresh_token: refreshToken,
-			}),
-		});
-
-		if (!response.ok) {
-			return response as unknown as ErrorType;
-		}
-
-		const data: Token = await response.json();
-
-		return data;
-	} catch (error: unknown) {
-		if (error instanceof Error) {
-			return {
-				error: {
-					message: error.message,
-					status: 500,
-				},
-			};
-		}
-	}
+	return await fetchAndHandleErrors(tokenEndpoint, {
+		method: "POST",
+		headers: {
+			Authorization: `Basic ${basic}`,
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: stringify({
+			grant_type: "refresh_token",
+			refresh_token: refreshToken,
+		}),
+	});
 }
 
 export { getAccessToken, getRefreshToken };
