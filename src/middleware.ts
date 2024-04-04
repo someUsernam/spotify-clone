@@ -15,6 +15,7 @@ export async function middleware(request: NextRequest) {
 	const expires_in = Number(cookieStore.get(KEYS.expires_in)?.value);
 	const creation_time = Number(cookieStore.get(KEYS.creation_time)?.value);
 	const access_token = cookieStore.get(KEYS.access_token)?.value;
+	const refresh_token = cookieStore.get(KEYS.refresh_token)?.value;
 	const { pathname, origin } = new URL(request.url);
 
 	//TODO: middleware headers setting,
@@ -33,6 +34,10 @@ export async function middleware(request: NextRequest) {
 	// 	});
 	// }
 
+	if (!access_token && !refresh_token && pathname !== LINKS.login) {
+		return NextResponse.redirect(new URL(LINKS.login, origin));
+	}
+
 	if (Number.isNaN(expires_in) || Number.isNaN(creation_time)) {
 		console.log(
 			`Invalid values: ${KEYS.expires_in}=${expires_in}, ${KEYS.creation_time}=${creation_time}`,
@@ -42,10 +47,6 @@ export async function middleware(request: NextRequest) {
 
 	if (isExpired(expires_in, creation_time) && pathname !== LINKS.refresh) {
 		return NextResponse.redirect(new URL(LINKS.refresh, origin));
-	}
-
-	if (!access_token && pathname !== LINKS.login) {
-		return NextResponse.redirect(new URL(LINKS.login, origin));
 	}
 
 	return NextResponse.next();
