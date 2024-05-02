@@ -11,11 +11,6 @@ async function TopBarUserProfile() {
 		return <TopBarLoginButtons />;
 	}
 
-	return (
-		<NotificationAndAvatarButtons
-			image={userProfile.images[0].url}
-			name={userProfile.display_name}
-		/>
-	);
+	return <NotificationAndAvatarButtons user={userProfile} />;
 }
 export { TopBarUserProfile };
