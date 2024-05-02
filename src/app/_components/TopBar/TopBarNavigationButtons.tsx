@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
+import NavigationButton from "./NavigationButton";
 
 function TopBarNavigationButtons() {
 	const router = useRouter();
@@ -29,15 +30,12 @@ function TopBarNavigationButtons() {
 	return (
 		<div className="flex gap-2 pointer-events-auto">
 			{navigationButtons.map(({ label, Icon, onClick }) => (
-				<button
-					type="button"
-					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary h-8 w-8 border-full rounded-full"
-					aria-label={label}
+				<NavigationButton
 					key={label}
+					label={label}
+					Icon={Icon}
 					onClick={onClick}
-				>
-					<Icon size={25} />
-				</button>
+				/>
 			))}
 		</div>
 	);
