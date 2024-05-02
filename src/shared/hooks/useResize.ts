@@ -52,7 +52,7 @@ function useResize() {
 		document.removeEventListener("mouseup", handleMouseUp);
 	};
 
-	const handleMousedown = (e: MouseEvent) => {
+	const handleMousedown = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
 		e.preventDefault();
 
