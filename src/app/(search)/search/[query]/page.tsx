@@ -1,3 +1,4 @@
+import { getImageUrlBySize } from "@/shared/utils/imageSize";
 import { Section } from "@blocks/Section";
 import { getSearch } from "@shared/services/spotify";
 import { Card } from "@ui/Card";
@@ -33,7 +34,7 @@ async function Page({ params: { query } }: QueryProps) {
 						<h2 className="text-2xl font-bold dark:text-primary">Top result</h2>
 						<Card href={`/artist/${artists.items[0].id}`} variant="rounded-xl">
 							<Card.Img
-								src={artists.items[0].images[0].url}
+								src={getImageUrlBySize(artists.items[0].images, "large")}
 								alt={`${artists.items[0].name} ${artists.items[0].type}`}
 							/>
 							<Card.Div>
