@@ -1,16 +1,14 @@
 "use client";
 
-import { LINKS } from "@/shared/utils/constants";
 import { Search } from "@ui/Search";
 import { useParams, usePathname } from "next/navigation";
-
-const { search } = LINKS;
+import { isSearchPage } from "./utils/isSearchPage";
 
 function TopBarShowSearch() {
 	const pathname = usePathname();
 	const { query } = useParams();
 
-	if (pathname === search.home || pathname === search.query(query)) {
+	if (isSearchPage(pathname, query)) {
 		return <Search />;
 	}
 
