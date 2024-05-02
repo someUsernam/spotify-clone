@@ -6,6 +6,8 @@ type SidebarUserPlaylistsProps = {
 };
 
 function SIdebarUserPlaylistItem({ playlist }: SidebarUserPlaylistsProps) {
+	// console.log(playlist.images[0].url);
+
 	return (
 		<Link
 			className="flex items-center gap-2 p-2 rounded-sm dark:hover:bg-card-highlight cursor-pointer"
@@ -13,7 +15,7 @@ function SIdebarUserPlaylistItem({ playlist }: SidebarUserPlaylistsProps) {
 			href={`/playlist/${playlist.id}`}
 		>
 			<Image
-				src={playlist.images[0].url}
+				src={""}
 				alt={`${playlist.name} ${playlist.type}`}
 				className="rounded-sm w-12 aspect-square object-cover"
 				width={48}
