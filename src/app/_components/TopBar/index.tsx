@@ -1,3 +1,4 @@
+import { Skeleton } from "@/shared/components/ui/Skeleton";
 import { Suspense } from "react";
 import { TopBarLayout } from "./TopBarLayout";
 import { TopBarNavigationButtons } from "./TopBarNavigationButtons";
@@ -26,7 +27,7 @@ function TopBar() {
 			<TopBarNavigationButtons />
 
 			<TopBarShowSearch />
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<Skeleton variant="circle" className="size-7" />}>
 				<TopBarUserProfile />
 			</Suspense>
 		</TopBarLayout>
