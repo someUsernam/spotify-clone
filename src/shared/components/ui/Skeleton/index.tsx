@@ -11,6 +11,7 @@ const variants = {
 	"square-sm": `${base} w-12 h-12 rounded-sm dark:bg-neutral-700 aspect-square`,
 	square: `${base} bg-neutral-600 w-20 rounded-sm aspect-square`,
 	"square-lg": `${base} bg-neutral-700 w-full rounded-sm aspect-square`,
+	circle: `${base} bg-neutral-600 rounded-full`,
 	"header-sm": `${base} bg-neutral-700 w-1/5 h-5 rounded-full `,
 	header: `${base} w-2/5 rounded-full h-14 dark:bg-neutral-700`,
 	badge: "",
