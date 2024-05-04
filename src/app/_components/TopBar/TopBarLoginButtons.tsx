@@ -7,7 +7,7 @@ function TopBarLoginButtons() {
 			<Button
 				href={`${DEV_URL}/api/login`}
 				variant="dark-lg"
-				className="h-12 dark:text-subdued dark:hover:text-primary dark:bg-transparent"
+				className="h-12 text-subdued hover:text-primary dark:bg-transparent"
 			>
 				Sign Up
 			</Button>

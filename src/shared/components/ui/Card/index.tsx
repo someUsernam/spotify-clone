@@ -19,7 +19,7 @@ const variants = {
 		layout: "gap-5 p-5",
 		title: "text-[2rem]",
 		description:
-			"rounded-full dark:bg-main-essential-subdued/10 dark:text-primary font-bold px-3 py-1 self-start",
+			"rounded-full bg-foreground/5 text-primary font-bold px-3 py-1 self-start",
 	},
 };
 
@@ -44,7 +44,7 @@ function Card({ children, href, variant = "square-md" }: CardProps) {
 	return (
 		<Link
 			href={href}
-			className={`flex flex-col dark:bg-card-primary dark:hover:bg-card-highlight rounded-md select-none overflow-hidden cursor-pointer transition-colors duration-200 ease-linear ${variants[variant].layout}`}
+			className={`flex flex-col bg-elevated hover:bg-highlight rounded-md select-none overflow-hidden cursor-pointer transition-colors duration-200 ease-linear ${variants[variant].layout}`}
 			data-variant={variant}
 		>
 			{children}

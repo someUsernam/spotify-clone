@@ -25,7 +25,7 @@ async function page({ searchParams: { q: query } }: SearchProps) {
 					className="rounded-lg bg-red-400 aspect-square overflow-hidden relative"
 					href={`${category.id}`}
 				>
-					<span className="text-2xl font-bold break-words  text-primary absolute inset-4">
+					<span className="text-2xl font-bold break-words text-primary absolute inset-4">
 						{category.name}
 					</span>
 					{category.icons.map((icon) => (

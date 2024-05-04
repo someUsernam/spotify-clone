@@ -33,7 +33,7 @@ function SearchInput() {
 	return (
 		<input
 			type="text"
-			className="dark:bg-elevated-secondary dark:hover:bg-elevated-highlight-secondary dark:placeholder:text-main-essential-subdued placeholder:font-medium focus:border-2 dark:focus:border-main-essential-primary hover:border dark:hover:border-[hsla(0,0%,100%,.2)] rounded-full px-9 py-1.5 truncate text-sm [flex:0_1_364px] h-12 outline-none"
+			className="bg-highlight/80 hover:bg-highlight placeholder:text-foreground/40 placeholder:font-medium focus:border-2 focus:border-foreground hover:border hover:border-[hsla(0,0%,100%,.2)] rounded-full px-9 py-1.5 truncate text-sm [flex:0_1_364px] h-12 outline-none"
 			placeholder="What do you want to listen to?"
 			autoCorrect="off"
 			autoCapitalize="off"

@@ -6,7 +6,7 @@ type PlaylistLayoutProps = {
 };
 
 function PlaylistLayout({ children, all = false }: PlaylistLayoutProps) {
-	let variant;
+	let variant = "";
 	if (all) {
 		variant = "grid-cols-[16px_6fr_4fr_3fr_minmax(120px,1fr)]";
 	} else {
@@ -17,7 +17,7 @@ function PlaylistLayout({ children, all = false }: PlaylistLayoutProps) {
 		<>
 			<div>
 				<div
-					className={`sticky top-16 px-4 z-2 grid grid-cols-[16px_1fr_minmax(60px,120px)] @2xl:${variant} @lg:grid-cols-[16px_4fr_2fr_minmax(20px,1fr)] grid-flow-col gap-x-4 border-b border-solid dark:border-main-essential-primary/1`}
+					className={`sticky top-16 px-4 z-2 grid grid-cols-[16px_1fr_minmax(60px,120px)] @2xl:${variant} @lg:grid-cols-[16px_4fr_2fr_minmax(20px,1fr)] grid-flow-col gap-x-4 border-b border-solid dark:border-highlight`}
 				>
 					<div>#</div>
 					<div>Title</div>
