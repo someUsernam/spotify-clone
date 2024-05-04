@@ -19,12 +19,12 @@ function FiltersLayout({ children }: ChildrenProps) {
 	return (
 		<div
 			ref={targetParent}
-			className="sticky top-16 h-12 py-2 flex items-center mb-8 text-sm z-10 dark:bg-secondary overflow-hidden whitespace-nowrap select-none "
+			className="sticky w-full top-0 h-12 py-2 flex items-center mb-8 text-sm z-10 bg-background overflow-hidden whitespace-nowrap select-none "
 		>
 			{showLeftButton && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-elevated-secondary dark:text-primary size-8 border-full rounded-full absolute left-0 z-10"
+					className="inline-flex items-center justify-center bg-highlight/80 dark:text-primary size-8 border-full rounded-full absolute left-0 z-10"
 					aria-label="Go Forward"
 					onClick={handleMoveLeft}
 				>
@@ -42,7 +42,7 @@ function FiltersLayout({ children }: ChildrenProps) {
 			{showRightButton && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-elevated-secondary dark:text-primary size-8 border-full rounded-full absolute right-0 z-10"
+					className="inline-flex items-center justify-center bg-highlight/80 dark:text-primary size-8 border-full rounded-full absolute right-0 z-10"
 					aria-label="Go Forward"
 					onClick={handleMoveRight}
 				>

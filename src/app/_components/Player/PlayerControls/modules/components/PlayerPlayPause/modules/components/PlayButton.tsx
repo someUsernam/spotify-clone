@@ -15,7 +15,7 @@ function PlayButton() {
 	return (
 		<Button
 			variant="none"
-			className="bg-primary text-secondary"
+			className="bg-primary text-primary-foreground"
 			onClick={handlePlay}
 		>
 			<BiPlay size={ICON_SIZE} />

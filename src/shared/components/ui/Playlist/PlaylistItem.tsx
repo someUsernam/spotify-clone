@@ -19,7 +19,7 @@ type AlbumProps = {
 };
 
 function PlaylistItem({ children }: ChildrenProps) {
-	let variant;
+	let variant = "";
 
 	if (Array.isArray(children)) {
 		if (children.length < 4) {
@@ -35,7 +35,7 @@ function PlaylistItem({ children }: ChildrenProps) {
 
 	return (
 		<div
-			className={`grid grid-cols-[16px_1fr_minmax(60px,120px)] grid-flow-col gap-x-4 h-14 px-4 items-center select-none dark:hover:bg-neutral-700 dark:hover:bg-main-essential-primary/10 rounded-md group ${variant}`}
+			className={`grid grid-cols-[16px_1fr_minmax(60px,120px)] grid-flow-col gap-x-4 h-14 px-4 items-center select-none hover:bg-highlight rounded-md group ${variant}`}
 		>
 			{children}
 		</div>
@@ -65,14 +65,14 @@ function Title({
 			<div className="flex flex-col">
 				<Link
 					href={`/track/${href}`}
-					className="line-clamp-1 dark:text-primary hover:underline hover:underline-offset-1 cursor-pointer"
+					className="line-clamp-1 text-primary hover:underline hover:underline-offset-1 cursor-pointer"
 				>
 					{children}
 				</Link>
 				<span className="line-clamp-1">
 					{artistsItems.map((artist, i, arr) => (
 						<Link
-							className=" hover:underline hover:underline-offset-1 text-sm cursor-pointer dark:group-hover:text-primary"
+							className=" hover:underline hover:underline-offset-1 text-sm cursor-pointer group-hover:text-primary"
 							href={`/artist/${artist.id}`}
 							key={artist.id}
 						>
@@ -93,7 +93,7 @@ function Album({ children, href }: AlbumProps) {
 	return (
 		<Link
 			href={`/album/${href}`}
-			className="truncate dark:group-hover:text-primary hover:underline hover:underline-offset-1 cursor-pointer text-sm hidden @lg:block"
+			className="truncate group-hover:text-primary hover:underline hover:underline-offset-1 cursor-pointer text-sm hidden @lg:block"
 		>
 			{children}
 		</Link>
@@ -116,7 +116,7 @@ function Duration({ children }: ChildrenProps) {
 			</button>
 			{HoursMinutesSeconds(children as number).join(":")}
 			<button type="button" className="hidden group-hover:block">
-				<AiOutlineEllipsis size={25} className="dark:text-primary" />
+				<AiOutlineEllipsis size={25} className="text-primary" />
 			</button>
 		</div>
 	);

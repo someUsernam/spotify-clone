@@ -13,13 +13,13 @@ function NotificationAndAvatarButtons({
 		<div className=" flex gap-x-2 whitespace-nowrap">
 			<button
 				type="button"
-				className="flex justify-center items-center w-8 aspect-square bg-secondary rounded-full touch-manipulation"
+				className="flex justify-center items-center w-8 aspect-square bg-background rounded-full touch-manipulation"
 			>
 				<SlBell size={18} />
 			</button>
 			<button
 				type="button"
-				className="flex justify-center items-center w-8 aspect-square bg-secondary rounded-full touch-manipulation overflow-hidden object-cover"
+				className="flex justify-center items-center w-8 aspect-square bg-background rounded-full touch-manipulation overflow-hidden object-cover"
 			>
 				<Avatar
 					image={getImageUrlBySize(user.images, "small")}

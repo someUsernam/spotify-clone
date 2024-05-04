@@ -2,7 +2,7 @@ import { Header } from "@blocks/Header";
 import Link from "next/link";
 
 type PlaylistHeaderProps = {
-	playlist: Playlists;
+	playlist: Playlist;
 };
 
 function PlaylistHeader({ playlist }: PlaylistHeaderProps) {

@@ -15,7 +15,7 @@ function PauseButton() {
 	return (
 		<Button
 			variant="none"
-			className="bg-primary text-secondary"
+			className="bg-primary text-primary-foreground"
 			onClick={handlePause}
 		>
 			<BiPause size={ICON_SIZE} />

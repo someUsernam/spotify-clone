@@ -18,7 +18,7 @@ const variants = {
 
 type HeaderProps = {
 	variant: keyof typeof variants;
-	playlists?: Playlists;
+	playlists?: Playlist;
 	children: React.ReactNode;
 };
 
@@ -33,7 +33,7 @@ function Header({ variant = "withImg", playlists, children }: HeaderProps) {
 
 	return (
 		<header
-			className={`pb-4 @md:pb-5 @lg:pb-6 dark:text-primary flex overflow-hidden select-none items-end -mt-16 ${variants[variant].layout}`}
+			className={`pb-4 @md:pb-5 @lg:pb-6 text-primary flex overflow-hidden select-none items-end -mt-16 ${variants[variant].layout}`}
 			data-variant={variant}
 		>
 			{children}
@@ -50,7 +50,7 @@ function Tagline({ children }: ChildrenProps) {
 }
 
 function Img() {
-	const playlist = HeaderContext.get("playlist") as Playlists;
+	const playlist = HeaderContext.get("playlist") as Playlist;
 
 	return (
 		<figure>
@@ -81,14 +81,14 @@ function Title({ children }: ChildrenProps) {
 
 function Subtitle({ children }: ChildrenProps) {
 	const variant = HeaderContext.get("variant") as HeaderProps["variant"];
-	const playlist = HeaderContext.get("playlist") as Playlists;
+	const playlist = HeaderContext.get("playlist") as Playlist;
 
 	let duration = "";
 
 	if (playlist) {
 		const [hours, minutes, seconds] = HoursMinutesSeconds(
 			playlist.tracks?.items.reduce(
-				(total, curr) => total + curr.track.duration_ms,
+				(total: number, curr) => total + curr.track.duration_ms,
 				0,
 			),
 		);
@@ -118,7 +118,7 @@ function Subtitle({ children }: ChildrenProps) {
 						className=" before:content-[attr(data-before)] before:p-1"
 					>
 						<span>{playlist.tracks.total} songs,&nbsp;</span>
-						<span className="dark:text-primary/70">{duration}</span>
+						<span className="text-primary/70">{duration}</span>
 					</span>
 				</>
 			) : (

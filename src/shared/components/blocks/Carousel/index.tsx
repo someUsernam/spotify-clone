@@ -37,7 +37,7 @@ function Carousel({
 			{showChips && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary size-8 border-full rounded-full absolute left-0"
+					className="inline-flex items-center justify-center bg-primary-foreground opacity-60 dark:text-primary size-8 border-full rounded-full absolute left-0"
 					aria-label="Go Back"
 				>
 					<GoChevronLeft size={25} />
@@ -47,7 +47,7 @@ function Carousel({
 			{showChips && (
 				<button
 					type="button"
-					className="inline-flex items-center justify-center dark:bg-main opacity-60 dark:text-primary size-8 border-full rounded-full absolute right-0"
+					className="inline-flex items-center justify-center bg-primary-foreground opacity-60 dark:text-primary size-8 border-full rounded-full absolute right-0"
 					aria-label="Go Forward"
 				>
 					<GoChevronRight size={25} />

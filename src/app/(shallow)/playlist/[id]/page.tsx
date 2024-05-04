@@ -20,7 +20,7 @@ async function Page({ params: { id } }: PlaylistParams) {
 		<>
 			<PlaylistHeader playlist={playlist} />
 			<PlaylistPlayer />
-			<PlaylistLayout>
+			<PlaylistLayout all={true}>
 				{playlist.tracks.items.map(
 					(item, i) =>
 						item.track.type === "track" && (

@@ -15,9 +15,8 @@ export const FiltersTags = [
 	{ href: "/genres", label: "Genres & Moods" },
 ];
 
-const activeFilter = "dark:bg-primary dark:text-secondary";
-const inactiveFilter =
-	"dark:bg-primary/[0.08] hover:bg-primary/[0.15] dark:text-primary";
+const activeFilter = "bg-primary text-primary-foreground";
+const inactiveFilter = "bg-primary/[0.08] hover:bg-primary/[0.15] text-primary";
 
 function FiltersList() {
 	const pathname = usePathname();

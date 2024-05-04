@@ -8,7 +8,7 @@ type SidebarUserPlaylistsProps = {
 function SIdebarUserPlaylistItem({ playlist }: SidebarUserPlaylistsProps) {
 	return (
 		<Link
-			className="flex items-center gap-2 p-2 rounded-sm dark:hover:bg-card-highlight cursor-pointer"
+			className="flex items-center gap-2 p-2 rounded-sm hover:bg-highlight cursor-pointer"
 			key={playlist.id}
 			href={`/playlist/${playlist.id}`}
 		>

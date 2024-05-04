@@ -7,9 +7,7 @@ interface Props extends ComponentProps<"div"> {
 
 function Box({ children, className }: Props) {
 	return (
-		<div
-			className={`dark:bg-main-primary rounded-lg dark:text-subdued ${className}`}
-		>
+		<div className={`bg-background rounded-lg text-subdued ${className}`}>
 			{children}
 		</div>
 	);

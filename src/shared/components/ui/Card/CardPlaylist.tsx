@@ -1,6 +1,6 @@
 import { Card } from ".";
 
-function CardPlaylist<T>({ item }: { item: T }) {
+function CardPlaylist<T extends SimplifiedPlaylist>({ item }: { item: T }) {
 	return (
 		<Card href={`/playlist/${item.id}`}>
 			<Card.Img src={item.images[0].url} alt={`${item.name} ${item.type}`} />

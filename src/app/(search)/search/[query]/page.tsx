@@ -31,7 +31,7 @@ async function Page({ params: { query } }: QueryProps) {
 			<section className="flex gap-x-6 items-center">
 				{artists && (
 					<div className="w-full">
-						<h2 className="text-2xl font-bold dark:text-primary">Top result</h2>
+						<h2 className="text-2xl font-bold text-primary">Top result</h2>
 						<Card href={`/artist/${artists.items[0].id}`} variant="rounded-xl">
 							<Card.Img
 								src={getImageUrlBySize(artists.items[0].images, "large")}
@@ -46,7 +46,7 @@ async function Page({ params: { query } }: QueryProps) {
 				)}
 				{tracks && (
 					<div>
-						<h2 className="grow text-2xl font-bold dark:text-primary">Songs</h2>
+						<h2 className="grow text-2xl font-bold text-primary">Songs</h2>
 						<div className="h-56 overflow-hidden grow">
 							{tracks.items.map((track, i) => (
 								<PlaylistItem key={track.id}>

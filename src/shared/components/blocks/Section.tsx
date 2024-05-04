@@ -25,7 +25,7 @@ function Section({
 		>
 			{title && (
 				<div className="flex mb-4">
-					<h2 className="grow text-2xl font-bold dark:text-primary">{title}</h2>
+					<h2 className="grow text-2xl font-bold text-primary">{title}</h2>
 					{href && (
 						<Link href={`section/${href}`} className=" text-sm font-bold">
 							Show all
